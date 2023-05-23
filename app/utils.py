@@ -6,22 +6,21 @@ def get_area_processo(response):
 
 
 def parse_data(html):
+    date = html.find(id="dataHoraDistribuicaoProcesso")
+    juiz = html.find(id="juizProcesso")
     return {
         'classe': html.find(id='classeProcesso').text.lstrip().rstrip(),
         'area': html.find(id="areaProcesso").text.lstrip().rstrip(),
         'assunto': html.find(id='assuntoProcesso').text,
+        'data': date.text[0:10] if date else "",
+        'juiz': juiz.text if juiz else "",
         'valor': clean_data(html.find(id='valorAcaoProcesso').text),
         'partes': get_partes(html)
     }
 
 
 def parse_data_primeiro_grau(html):
-    date = html.find("div", id="dataHoraDistribuicaoProcesso").text
-    juiz = html.find(id="juizProcesso")
-
     data1 = parse_data(html)
-    data1.update({'data': date[0:10] if date else ""})
-    data1.update({'juiz': juiz.text if juiz else ""})
     data1.update({'movimentações': get_movimentos_primeiro_grau(html)})
     return data1
 
@@ -77,6 +76,6 @@ def clean_data(data: str):
     if data is None:
         return data
     data = data.replace("\n", " ").replace("&nbsp", " ") \
-        .replace("\t", "").replace("\r", "").replace("\"", '"')\
+        .replace("\t", " ").replace("\r", "").replace('\"', '"')\
         .replace("\xa0", "").replace("None", "").rstrip().lstrip()
     return re.sub(' +', ' ', data)

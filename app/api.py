@@ -5,13 +5,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from crawler import search_process_data
-from models import ProcessRequestBody, ProcessRequestInformations
+from app.crawler import search_process_data
+from app.models import ProcessRequestBody, ProcessRequestInformations
 
 app = FastAPI()
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+#
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+# templates = Jinja2Templates(directory="templates")
 
 
 @app.post("/processo")
@@ -23,4 +23,5 @@ def buscar_processo(process_request: ProcessRequestBody):
 @app.get("/processo/{id_processo}", response_class=HTMLResponse)
 def buscar_processo(id_processo: str):
     processo_info = ProcessRequestInformations(id_processo)
-    return templates.TemplateResponse("process.html", {"request": processo_info, "dados": search_process_data(processo_info)})
+    return search_process_data(processo_info)
+    # return templates.TemplateResponse("process.html", {"request": processo_info, "dados": search_process_data(processo_info)})

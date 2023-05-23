@@ -1,12 +1,18 @@
 import logging
+import time
 
 import requests
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
+from seleniumrequests import Firefox
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-from enums import TRIBUNAIS_VALIDOS, Tribunais, DominiosPorTribunal
-from exceptions import TribunalInvalidoException, ProcessCodeNotFoundException
-from models import ProcessRequestInformations
-from utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
+from app.enums import TRIBUNAIS_VALIDOS, Tribunais, DominiosPorTribunal
+from app.exceptions import TribunalInvalidoException, ProcessCodeNotFoundException
+from app.models import ProcessRequestInformations
+from app.utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
+
 
 PROCESSO_NAO_ENCONTRADO = "Não existem informações disponíveis para os parâmetros informados."
 
@@ -17,6 +23,7 @@ def busca_primeiro_grau(processo: ProcessRequestInformations, dominio: str):
           f"&processo.numero={processo.numero_processo}"
 
     html = send_request_and_get_response(url)
+
 
     result = {}
 
@@ -65,8 +72,12 @@ def busca_segundo_grau(processo: ProcessRequestInformations, dominio: str):
 
 
 def send_request_and_get_response(url):
-    response = requests.get(url)
-    html = BeautifulSoup(response.text, "lxml")
+
+    driver = Firefox()
+
+    response = driver.request(url)
+
+    html = BeautifulSoup(response.page_source, "lxml")
     return html
 
 
@@ -85,6 +96,6 @@ def search_process_data(process: ProcessRequestInformations):
 
 
 if __name__ == "__main__":
-    processo = ProcessRequestInformations('0710802-55.2018.8.02.0001')
-    print(busca_primeiro_grau(processo, DominiosPorTribunal.TJAL.value))
-    print(busca_segundo_grau(processo, DominiosPorTribunal.TJAL.value))
+    processo = ProcessRequestInformations('0070337-91.2008.8.06.0001')
+    print(busca_primeiro_grau(processo, DominiosPorTribunal.TJCE.value))
+    print(busca_segundo_grau(processo, DominiosPorTribunal.TJCE.value))
