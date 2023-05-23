@@ -17,10 +17,11 @@ def parse_data(html):
 
 def parse_data_primeiro_grau(html):
     date = html.find("div", id="dataHoraDistribuicaoProcesso").text
+    juiz = html.find(id="juizProcesso")
 
     data1 = parse_data(html)
     data1.update({'data': date[0:10] if date else ""})
-    data1.update({'juiz': html.find("span", id='juizProcesso').text})
+    data1.update({'juiz': juiz.text if juiz else ""})
     data1.update({'movimentações': get_movimentos_primeiro_grau(html)})
     return data1
 
