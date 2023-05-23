@@ -3,8 +3,8 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 
-from app.enums import TRIBUNAIS_VALIDOS, Tribunais, DominiosPorTribunal
-from app.exceptions import TribunalInvalidoException, ProcessCodeNotFoundException
+from enums import TRIBUNAIS_VALIDOS, Tribunais, DominiosPorTribunal
+from exceptions import TribunalInvalidoException, ProcessCodeNotFoundException
 from models import ProcessRequestInformations
 from utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
 
