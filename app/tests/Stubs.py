@@ -1,5 +1,11 @@
+NUMERO_PROCESSO_TEST = "0165801-59.2019.8.06.0001"
+
+request_body_test = {
+  "numero_processo": NUMERO_PROCESSO_TEST
+}
+
 expected_response_body = {
-    "id": "0165801-59.2019.8.06.0001",
+    "id": NUMERO_PROCESSO_TEST,
     "Primeiro Grau": {
         "classe": "Procedimento Comum Cível",
         "area": "Cível",

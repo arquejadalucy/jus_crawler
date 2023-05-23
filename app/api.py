@@ -19,7 +19,7 @@ def buscar_processo(process_request: ProcessRequestBody):
 
 
 @app.get("/processo/{id_processo}", response_class=HTMLResponse)
-def buscar_processo(id_processo: str):
+def get_processo_info_by_id(id_processo: str):
     processo_info = ProcessRequestInformations(id_processo)
     return search_process_data(processo_info)
     # return templates.TemplateResponse("process.html", {"request": processo_info, "dados": search_process_data(processo_info)})
