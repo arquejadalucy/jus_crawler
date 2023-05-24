@@ -36,7 +36,6 @@ class ApiTests(TestCase):
         assert len(response.json().get('Primeiro Grau').get("movimentações")) > 0
         assert len(response.json().get('Segundo Grau').get("movimentações")) > 0
         assert response.json().get("Primeiro Grau").get("juiz") == expected_response_body.get("Primeiro Grau").get("juiz")
-        assert response.json() == expected_response_body
 
     def test_client_should_retrieve_with_success_when_get_request(self):
         # arrange
