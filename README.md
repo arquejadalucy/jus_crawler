@@ -48,6 +48,8 @@ Use the app deployed on Deta Space.
 
 **Application is available at https://jus_crawler-1-e8456548.deta.app**
 
+**API's documentation: https://jus_crawler-1-e8456548.deta.app/docs**
+
 # How to run locally
 
 ## Install the requirements:
