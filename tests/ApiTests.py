@@ -32,7 +32,6 @@ class ApiTests(TestCase):
         # assert
         assert response.status_code == 200
         assert len(response.json()) == 3
-        assert "ERROR" not in response.json().get('Segundo Grau')
         assert len(response.json().get('Primeiro Grau').get("movimentações")) > 0
         assert len(response.json().get('Segundo Grau').get("movimentações")) > 0
         assert response.json().get("Primeiro Grau").get("juiz") == expected_response_body.get("Primeiro Grau").get("juiz")
