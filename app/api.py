@@ -1,7 +1,5 @@
-import logging
-
 from cerberus import Validator
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -11,12 +9,12 @@ from app.models import ProcessRequestBody, ProcessRequestInformations
 from app.schemas import process_request_informations_schema, id_processo_schema
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-templates = Jinja2Templates(directory="app/templates/")
-
 validator = Validator()
 
 
+#
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+# templates = Jinja2Templates(directory="templates")
 def valid_request(processo_info: ProcessRequestInformations):
     return validator.validate(processo_info.__dict__, process_request_informations_schema)
 
@@ -24,17 +22,23 @@ def valid_request(processo_info: ProcessRequestInformations):
 def valid_process_id(numero_processo: str):
     return validator.validate({"id": numero_processo}, id_processo_schema)
 
-@app.get('/')
-def home():
-    return 'hello world'
 
-@app.get("/processos")
-def busca_processos(request: Request):
-    result = "Digite o número do processo para visualizar o resultado"
-    return templates.TemplateResponse("home.html", {"request": request, "result": result})
+@app.post("/processo")
+def buscar_processo(process_request: ProcessRequestBody):
+    if not valid_process_id(process_request.numero_processo):
+        return validator.errors
 
-@app.post("/processos")
-def busca_processos(request: Request, id_processo: str):
+    processo_info = ProcessRequestInformations(process_request.numero_processo)
+
+    if not valid_request(processo_info):
+        return validator.errors
+
+    response = search_process_data(processo_info)
+    return response
+
+
+@app.get("/processo/{id_processo}")
+def get_processo_info_by_id(id_processo: str):
     if not valid_process_id(id_processo):
         return validator.errors
 
@@ -42,34 +46,5 @@ def busca_processos(request: Request, id_processo: str):
 
     if not valid_request(processo_info):
         return validator.errors
-
-    result = search_process_data(processo_info)
-    return templates.TemplateResponse("home.html", {"request": request, "result": result})
-# @app.post("/processo")
-# def buscar_processo(process_request: ProcessRequestBody):
-#     if not valid_process_id(process_request.numero_processo):
-#         return validator.errors
-#
-#     processo_info = ProcessRequestInformations(process_request.numero_processo)
-#
-#     if not valid_request(processo_info):
-#         return validator.errors
-#
-#     response = search_process_data(processo_info)
-#     return response
-
-
-# @app.get("/processo/{id_processo}")
-# def get_processo_info_by_id(id_processo: str):
-#     if not valid_process_id(id_processo):
-#         return validator.errors
-#
-#     processo_info = ProcessRequestInformations(id_processo)
-#
-#     if not valid_request(processo_info):
-#         return validator.errors
-#     return search_process_data(processo_info)
-#     # return templates.TemplateResponse("process.html", {"request": processo_info, "dados": search_process_data(processo_info)})
-
-
-
+    return search_process_data(processo_info)
+    # return templates.TemplateResponse("process.html", {"request": processo_info, "dados": search_process_data(processo_info)})
