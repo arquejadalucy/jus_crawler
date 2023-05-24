@@ -43,7 +43,12 @@ Exemplos de números de processos podem ser encontrados nos diários oficiais
 | 11. | README.md        | Arquivo atual com a documentação do projeto                                                                   |
 | 12. | requirements.txt | Lista dos pacotes utilizados no projeto                                                                       |
 
-# How to run
+# Access the API
+Use the app deployed on Deta Space.
+
+**Application is available at https://jus_crawler-1-e8456548.deta.app**
+
+# How to run locally
 
 ## Install the requirements:
 ```bash
@@ -56,6 +61,7 @@ uvicorn app.api:app --reload
 Service will be available in http://127.0.0.1:8000
 
 API's documentation will be available in http://127.0.0.1:8000/docs
+
 # Tests
 ## Run tests with coverage
 ```bash

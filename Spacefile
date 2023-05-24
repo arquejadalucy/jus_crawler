@@ -1,0 +1,10 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: jus-crawler
+    src: ./
+    engine: python3.9
+    primary: true
+    run: uvicorn app.api:app --reload
+    public_routes:
+      - "/*"
