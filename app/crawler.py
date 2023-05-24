@@ -9,8 +9,6 @@ from app.utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_d
 
 ERROR = "ERROR"
 
-PROCESSO_NAO_ENCONTRADO = "Não existem informações disponíveis para os parâmetros informados."
-
 
 def busca_primeiro_grau(processo: ProcessRequestInformations, dominio: str):
     data = {"id": processo.numero_processo}
@@ -29,7 +27,7 @@ def busca_primeiro_grau(processo: ProcessRequestInformations, dominio: str):
     return data
 
 
-def busca_codigo_segundo_grau(url: str, processo: ProcessRequestInformations):
+def busca_codigo_segundo_grau(url: str):
     codigo = ""
     html = send_request_and_get_response(url)
 
@@ -48,7 +46,7 @@ def busca_segundo_grau(processo: ProcessRequestInformations, dominio: str):
           f"cbPesquisa=NUMPROC&numeroDigitoAnoUnificado={processo.numeroDigitoAnoUnificado}" \
           f"&foroNumeroUnificado={processo.foro}&dePesquisaNuUnificado={processo.numero_processo}" \
           f"&dePesquisaNuUnificado=UNIFICADO&dePesquisa=&tipoNuProcesso=UNIFICADO"
-    codigo = busca_codigo_segundo_grau(url, processo)
+    codigo = busca_codigo_segundo_grau(url)
     if codigo:
         url = f"https://{dominio}/cposg5/show.do?processo.codigo={codigo}"
 
@@ -76,11 +74,10 @@ def send_request_and_get_response(url):
 
 def search_process_data(process: ProcessRequestInformations):
     nome_tribunal = Tribunais(process.tribunal).name
-    dominio = DominiosPorTribunal[nome_tribunal].value
+    dominio = str(DominiosPorTribunal[nome_tribunal].value)
     data = busca_primeiro_grau(process, dominio)
     data.update(busca_segundo_grau(process, dominio))
     return data
-
 
 # if __name__ == "__main__":
 #     processo = ProcessRequestInformations('0070337-91.2008.8.06.0001')
