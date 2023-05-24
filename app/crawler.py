@@ -3,8 +3,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 
-from app.enums import TRIBUNAIS_VALIDOS, Tribunais, DominiosPorTribunal
-from app.exceptions import TribunalInvalidoException
+from app.enums import Tribunais, DominiosPorTribunal
 from app.models import ProcessRequestInformations
 from app.utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
 
@@ -75,13 +74,7 @@ def send_request_and_get_response(url):
     return result
 
 
-def validate_info(process: ProcessRequestInformations):
-    if process.tribunal not in TRIBUNAIS_VALIDOS:
-        raise TribunalInvalidoException
-
-
 def search_process_data(process: ProcessRequestInformations):
-    validate_info(process)
     nome_tribunal = Tribunais(process.tribunal).name
     dominio = DominiosPorTribunal[nome_tribunal].value
     data = busca_primeiro_grau(process, dominio)
@@ -89,7 +82,7 @@ def search_process_data(process: ProcessRequestInformations):
     return data
 
 
-if __name__ == "__main__":
-    processo = ProcessRequestInformations('0070337-91.2008.8.06.0001')
-    print(busca_primeiro_grau(processo, DominiosPorTribunal.TJCE.value))
-    print(busca_segundo_grau(processo, DominiosPorTribunal.TJCE.value))
+# if __name__ == "__main__":
+#     processo = ProcessRequestInformations('0070337-91.2008.8.06.0001')
+#     print(busca_primeiro_grau(processo, DominiosPorTribunal.TJCE.value))
+#     print(busca_segundo_grau(processo, DominiosPorTribunal.TJCE.value))

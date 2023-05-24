@@ -1,8 +1,21 @@
-NUMERO_PROCESSO_TEST = "0165801-59.2019.8.06.0001"
+from app.models import ProcessRequestBody, ProcessRequestInformations
 
-request_body_test = {
+PROCESSO_NAO_ENCONTRADO = "Não existem informações disponíveis para os parâmetros informados."
+
+DOMINIO_TJAL = "www2.tjal.jus.br"
+NUMERO_PROCESSO_TEST = "0165801-59.2019.8.06.0001"
+NUMERO_PROCESSO_TEST_CODIGO = "0710802-55.2018.8.02.0001"
+CODIGO_PROCESSO = "P00006BXP0000"
+
+request_body_json_test = {
   "numero_processo": NUMERO_PROCESSO_TEST
 }
+
+def get_url_tjal_segundo_grau(processo_info: ProcessRequestInformations):
+    return f"https://{DOMINIO_TJAL}/cposg5/search.do?conversationId=&paginaConsulta=0&cbPesquisa=NUMPROC" \
+    f"&numeroDigitoAnoUnificado={processo_info.numeroDigitoAnoUnificado}" \
+    f"&foroNumeroUnificado={processo_info.foro}&dePesquisaNuUnificado={processo_info.numero_processo}" \
+    f"&dePesquisaNuUnificado=UNIFICADO&dePesquisa=&tipoNuProcesso=UNIFICADO"
 
 expected_response_body = {
     "id": NUMERO_PROCESSO_TEST,
