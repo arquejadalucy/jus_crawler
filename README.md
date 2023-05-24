@@ -35,13 +35,13 @@ Exemplos de números de processos podem ser encontrados nos diários oficiais
 | 3.  | app/crawler.py   | Implementação do crawler com métodos de busca e parsing dos dados                                             |
 | 4.  | app/enums.py     | Estruturas que concentram informações necessárias dos tribunais suportados (nome, número e domínio do site)   |
 | 5.  | app/models.py    | Classes para informações necessárias para processar as requisições da API                                     |
-| 5.  | app/schemas.py   | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org) |
-| 6.  | app/utils.py     | Métodos utilizados pelo crawler para parsing dos dados                                                        |
-| 7.  | tests/           | Diretório com os testes do projeto                                                                            |
-| 8.  | tests/Stubs.py   | Arquivo com dados utilizados nos testes                                                                       |
-| 9.  | tests/Tests.py   | Classes de testes automatizados                                                                               |
-| 10. | README.md        | Arquivo atual com a documentação do projeto                                                                   |
-| 11. | requirements.txt | Lista dos pacotes utilizados no projeto                                                                       |
+| 6.  | app/schemas.py   | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org) |
+| 7.  | app/utils.py     | Métodos utilizados pelo crawler para parsing dos dados                                                        |
+| 8.  | tests/           | Diretório com os testes do projeto                                                                            |
+| 9.  | tests/Stubs.py   | Arquivo com dados utilizados nos testes                                                                       |
+| 10. | tests/Tests.py   | Classes de testes automatizados                                                                               |
+| 11. | README.md        | Arquivo atual com a documentação do projeto                                                                   |
+| 12. | requirements.txt | Lista dos pacotes utilizados no projeto                                                                       |
 
 # How to run
 
