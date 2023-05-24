@@ -1,2 +1,0 @@
-class TribunalInvalidoException(Exception):
-    pass
