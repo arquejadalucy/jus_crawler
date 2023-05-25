@@ -10,7 +10,7 @@ process_request_body_schema = {
     'numero_processo': {'type': 'string', 'required': True}
 }
 
-id_processo_schema = {'id': {'type': 'string', 'nullable': False,
+id_processo_schema = {'id': {'type': 'string',
                              'regex': "\d\d\d\d\d\d\d-\d\d\.\d\d\d\d\.\d\.\d\d\.\d\d\d\d"}}
 
 process_request_informations_schema = {
