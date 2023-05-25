@@ -42,7 +42,7 @@ def get_movimentos_primeiro_grau(html):
         descricao_movimento = clean_data(movimento.find(class_='descricaoMovimentacao').text)
 
         movimentos_list.append({"data_movimentação": data_movimento,
-                                "descrição_movimentação": descricao_movimento})
+                                "descrição_movimentação": " ".join(descricao_movimento.split())})
     return movimentos_list
 
 
@@ -54,7 +54,7 @@ def get_movimentos_segundo_grau(html):
         descricao_movimento = clean_data(movimento.find(class_='descricaoMovimentacaoProcesso').text)
 
         movimentos_list.append({"data_movimentação": data_movimento,
-                                "descrição_movimentação": descricao_movimento})
+                                "descrição_movimentação": " ".join(descricao_movimento.split())})
     return movimentos_list
 
 
@@ -86,6 +86,6 @@ def clean_data(data: str):
     if data is not None:
         data = data.replace("\n", " ").replace("&nbsp", " ").replace("&nbsp;", " ") \
             .replace("\t", " ").replace("\r", "").replace('\"', '"') \
-            .replace("\xa0", "").replace("None", "").rstrip().lstrip()
+            .replace("\xa0", "").replace("None", "").strip()
         re.sub(' +', ' ', data)
     return data
