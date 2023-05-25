@@ -75,8 +75,8 @@ def get_partes(html):
 
 def get_parte_obj(nomes, tipo_de_participacao: str):
     partes = re.split(" Advogado: | Advogada: ", nomes)
-    nome = partes[0]
-    advogados = partes[1::]
+    nome = clean_data(partes[0])
+    advogados = [clean_data(adv) for adv in partes[1::]]
     if advogados:
         return ParteComAdvogados(nome=nome, tipo_de_participacao=tipo_de_participacao, advogados=advogados)
     return Parte(nome=nome, tipo_de_participacao=tipo_de_participacao)
