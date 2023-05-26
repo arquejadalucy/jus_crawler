@@ -16,10 +16,9 @@ def parse_data(html):
         'assunto': assunto.text if assunto else "",
         'data': date.text[0:10] if date else "",
         'juiz': juiz.text if juiz else "",
-        'valor': clean_data(valor.text) if valor else "",
+        'valor': clean_data(" ".join(valor.text.split())) if valor else "",
         'partes': get_partes(html)
     }
-
 
 def parse_data_primeiro_grau(html):
     data1 = parse_data(html)

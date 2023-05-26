@@ -4,7 +4,6 @@ from pydantic import BaseModel
 class ProcessRequestBody(BaseModel):
     numero_processo: str
 
-
 class Parte(BaseModel):
     nome: str
     tipo_de_participacao: str
