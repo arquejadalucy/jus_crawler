@@ -1,5 +1,5 @@
 from cerberus import Validator
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -7,14 +7,15 @@ from fastapi.templating import Jinja2Templates
 from app.crawler import search_process_data
 from app.models import ProcessRequestBody, ProcessRequestInformations
 from app.schemas import process_request_informations_schema, id_processo_schema
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 app = FastAPI()
 validator = Validator()
 
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+jinja_templates = Jinja2Templates(directory="app/templates")
 
-#
-# app.mount("/static", StaticFiles(directory="static"), name="static")
-# templates = Jinja2Templates(directory="templates")
+
 def valid_request(processo_info: ProcessRequestInformations):
     return validator.validate(processo_info.__dict__, process_request_informations_schema)
 
@@ -47,4 +48,22 @@ def get_processo_info_by_id(id_processo: str):
     if not valid_request(processo_info):
         return validator.errors
     return search_process_data(processo_info)
-    # return templates.TemplateResponse("process.html", {"request": processo_info, "dados": search_process_data(processo_info)})
+
+
+@app.post('/buscaprocesso', include_in_schema=False)
+def buscar_processo_pelo_form(request: Request, id_processo: str = Form()):
+    if not valid_process_id(id_processo):
+        return validator.errors
+
+    processo_info = ProcessRequestInformations(id_processo)
+
+    if not valid_request(processo_info):
+        return validator.errors
+
+    result = search_process_data(processo_info)
+    return jinja_templates.TemplateResponse('processo.html', {'request': request, 'result': result})
+
+
+@app.get('/', response_class=HTMLResponse, include_in_schema=False)
+def main(request: Request):
+    return jinja_templates.TemplateResponse('home.html', {'request': request})
