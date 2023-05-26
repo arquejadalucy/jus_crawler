@@ -78,8 +78,3 @@ def search_process_data(process: ProcessRequestInformations):
     data = busca_primeiro_grau(process, dominio)
     data.update(busca_segundo_grau(process, dominio))
     return data
-
-# if __name__ == "__main__":
-#     processo = ProcessRequestInformations('0070337-91.2008.8.06.0001')
-#     print(busca_primeiro_grau(processo, DominiosPorTribunal.TJCE.value))
-#     print(busca_segundo_grau(processo, DominiosPorTribunal.TJCE.value))
