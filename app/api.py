@@ -27,7 +27,7 @@ def buscar_processo(process_request: ProcessRequestBody):
 
     O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
 
-    Input: {"numero_processo": "string"}
+    Input: JSON contendo o número do processo - {"numero_processo": "string"}
 
     Output: JSON contendo as seguintes informações:
 
@@ -62,7 +62,7 @@ def get_processo_info_by_id(id_processo: str):
 
     O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
 
-    Input: {"numero_processo": "string"}
+    Input: Número do processo
 
     Output: JSON contendo as seguintes informações:
 
