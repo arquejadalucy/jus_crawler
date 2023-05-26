@@ -33,6 +33,14 @@ Exemplos de números de processos podem ser encontrados nos diários oficiais
 * Diário oficial de Alagoas: https://www.jusbrasil.com.br/diarios/DJAL/
 * Diário de justiça do estado do Ceará: https://www.jusbrasil.com.br/diarios/DJCE/
 
+# Accesso à aplicação
+
+Foi feito deploy da aplicação no Deta Space. 
+
+**Está disponível em: https://jus_crawler-1-e8456548.deta.app**
+
+**A documentação da API pode ser acessada em: https://jus_crawler-1-e8456548.deta.app/docs**
+
 # Organização do código
 
 | №   | Path             | Description                                                                                                          |
@@ -50,13 +58,19 @@ Exemplos de números de processos podem ser encontrados nos diários oficiais
 | 11. | README.md        | Arquivo atual com a documentação do projeto                                                                          |
 | 12. | requirements.txt | Lista dos pacotes utilizados no projeto                                                                              |
 
-# Access the API
+# Performance
 
-Use the app deployed on Deta Space.
+Na branch ```async-tjal``` encontra-se o código com implementação de processamento assíncrono. Essa funcionalidade
+reduziu o tempo de resposta da API, possibilitando a busca e retorno dos dados em menos de 2 segundos (em média).
 
-**Application is available at https://jus_crawler-1-e8456548.deta.app**
+Porém, uma limitação foi encontrada. Não foi possível estabelecer conexão com o site do TJCE utilizando essa
+funcionalidade. A mensagem de erro pode ser visualizada abaixo:
 
-**Swagger API's documentation: https://jus_crawler-1-e8456548.deta.app/docs**
+```
+aiohttp.client_exceptions.ClientConnectorSSLError: Cannot connect to host esaj.tjce.jus.br:443 ssl:default [TLS/SSL connection has been closed (EOF)]
+```
+
+Portanto, atualmente é possível utilizar o processamento assíncrono apenas para buscar informações de processos do TJAL.
 
 # How to run locally
 
@@ -98,17 +112,3 @@ coverage html
 
 Html coverage report page will be available
 in [htmlcov/index.html](http://localhost:63342/jus_crawler/htmlcov/index.html)
-
-# Performance
-
-Na branch ```async-tjal``` encontra-se o código com implementação de processamento assíncrono. Essa funcionalidade
-reduziu o tempo de resposta da API, possibilitando a busca e retorno dos dados em menos de 2 segundos (em média).
-
-Porém, uma limitação foi encontrada. Não foi possível estabelecer conexão com o site do TJCE utilizando essa
-funcionalidade. A mensagem de erro pode ser visualizada abaixo:
-
-```
-aiohttp.client_exceptions.ClientConnectorSSLError: Cannot connect to host esaj.tjce.jus.br:443 ssl:default [TLS/SSL connection has been closed (EOF)]
-```
-
-Portanto, atualmente é possível utilizar o processamento assíncrono apenas para buscar informações de processos do TJAL.
