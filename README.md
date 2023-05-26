@@ -80,7 +80,7 @@ coverage html
 Html coverage report page will be available in [htmlcov/index.html](http://localhost:63342/jus_crawler/htmlcov/index.html)
 
 # Performance
-Na branch ```async-tjal``` encontra-se o código com implementação de processamento assíncrono. Essa funcionalidade reduziu o tempo de resposta da API pela metade, possibilitando a busca e retorno dos dados em menos de 2 segundos (em média).
+Na branch ```async-tjal``` encontra-se o código com implementação de processamento assíncrono. Essa funcionalidade reduziu o tempo de resposta da API, possibilitando a busca e retorno dos dados em menos de 2 segundos (em média).
 
 Porém, uma limitação foi encontrada. Não foi possível estabelecer conexão com o site do TJCE utilizando essa funcionalidade. A mensagem de erro pode ser visualizada abaixo:
 ```
