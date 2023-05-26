@@ -6,11 +6,11 @@ from fastapi.templating import Jinja2Templates
 
 from app.crawler import search_process_data
 from app.models import ProcessRequestBody, ProcessRequestInformations
-from app.schemas import process_request_informations_schema, id_processo_schema
+from app.schemas import process_request_informations_schema, id_processo_schema, ProcessNumberRegexErrorHandler
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 app = FastAPI()
-validator = Validator()
+validator = Validator(error_handler=ProcessNumberRegexErrorHandler)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 jinja_templates = Jinja2Templates(directory="app/templates")
@@ -21,7 +21,7 @@ def valid_request(processo_info: ProcessRequestInformations):
 
 
 def valid_process_id(numero_processo: str):
-    return validator.validate({"id": numero_processo}, id_processo_schema)
+    return validator.validate({"numero_processo": numero_processo}, id_processo_schema)
 
 
 @app.post("/processo")
