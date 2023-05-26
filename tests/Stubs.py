@@ -1,7 +1,6 @@
 from app.enums import DominiosPorTribunal
 from app.models import ProcessRequestInformations
 
-VALUE_DOES_NOT_MATCH_REGEX = 'value does not match regex '
 TRIBUNAL_NAO_SUPORTADO = "Tribunal não suportado."
 
 CLASSE_PROCESSO_TESTE_PRIMEIRO_GRAU = "Procedimento Comum Cível"

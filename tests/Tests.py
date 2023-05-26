@@ -2,6 +2,7 @@ import os
 import sys
 
 from app.crawler import send_request_and_get_response
+from app.schemas import validate_process_number_message
 
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(parent_dir)
@@ -18,7 +19,7 @@ from Stubs import NUMERO_PROCESSO_TEST_CENARIO_SUCESSO, PROCESSO_NAO_ENCONTRADO,
     NUMERO_PROCESSO_TEST_CODIGO, DOMINIO_TJAL, CODIGO_PROCESSO, get_url_tjal_segundo_grau, \
     NUMERO_PROCESSO_SEM_ADVOGADOS, DOMINIO_TJCE, ASSUNTO_PROCESSO_TESTE_PRIMEIRO_GRAU, \
     ASSUNTO_PROCESSO_TESTE_SEGUNDO_GRAU, CLASSE_PROCESSO_TESTE_PRIMEIRO_GRAU, CLASSE_PROCESSO_TESTE_SEGUNDO_GRAU, \
-    get_request_body_json_test, NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU, VALUE_DOES_NOT_MATCH_REGEX, \
+    get_request_body_json_test, NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU,\
     NUMERO_PROCESSO_TRIBUNAL_INVALIDO, TRIBUNAL_NAO_SUPORTADO
 
 client = TestClient(app)
@@ -58,8 +59,8 @@ class ApiTests(TestCase):
         # assert
         assert response is not None
         assert len(response.json()) == 1
-        assert len(response.json().get("id")) == 1
-        assert VALUE_DOES_NOT_MATCH_REGEX in response.json().get("id")[0]
+        assert len(response.json().get("numero_processo")) == 1
+        assert validate_process_number_message in response.json().get("numero_processo")
 
     def test_client_should_return_error_when_post_request_with_invalid_number(self):
         # arrange
@@ -71,8 +72,8 @@ class ApiTests(TestCase):
         # assert
         assert response is not None
         assert len(response.json()) == 1
-        assert len(response.json().get("id")) == 1
-        assert VALUE_DOES_NOT_MATCH_REGEX in response.json().get("id")[0]
+        assert len(response.json().get("numero_processo")) == 1
+        assert validate_process_number_message in response.json().get("numero_processo")
 
     def test_client_should_return_error_when_post_request_with_null_number(self):
         # arrange
@@ -84,8 +85,8 @@ class ApiTests(TestCase):
         # assert
         assert response is not None
         assert len(response.json()) == 1
-        assert len(response.json().get("id")) == 1
-        assert VALUE_DOES_NOT_MATCH_REGEX in response.json().get("id")[0]
+        assert len(response.json().get("numero_processo")) == 1
+        assert validate_process_number_message in response.json().get("numero_processo")
 
     def test_client_should_return_error_when_post_request_with_invalid_tribunal(self):
         # arrange

@@ -11,9 +11,6 @@ from app.schemas import process_request_informations_schema, id_processo_schema,
 app = FastAPI()
 validator = Validator(error_handler=ProcessNumberRegexErrorHandler)
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
-jinja_templates = Jinja2Templates(directory="app/templates")
-
 
 def valid_request(processo_info: ProcessRequestInformations):
     return validator.validate(processo_info.__dict__, process_request_informations_schema)
@@ -49,20 +46,17 @@ def get_processo_info_by_id(id_processo: str):
     return search_process_data(processo_info)
 
 
+def get_jinja_templates():
+    app.mount("/static", StaticFiles(directory="app/static"), name="static")
+    return Jinja2Templates(directory="app/templates")
+
+
 @app.post('/buscaprocesso', include_in_schema=False)
 def buscar_processo_pelo_form(request: Request, id_processo: str = Form()):
-    if not valid_process_id(id_processo):
-        return validator.errors
-
-    processo_info = ProcessRequestInformations(id_processo)
-
-    if not valid_request(processo_info):
-        return validator.errors
-
-    result = search_process_data(processo_info)
-    return jinja_templates.TemplateResponse('processo.html', {'request': request, 'result': result})
+    result = get_processo_info_by_id(id_processo)
+    return get_jinja_templates().TemplateResponse('processo.html', {'request': request, 'result': result})
 
 
 @app.get('/', response_class=HTMLResponse, include_in_schema=False)
 def main(request: Request):
-    return jinja_templates.TemplateResponse('home.html', {'request': request})
+    return get_jinja_templates().TemplateResponse('home.html', {'request': request})
