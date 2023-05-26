@@ -7,7 +7,6 @@ from fastapi.templating import Jinja2Templates
 from app.crawler import search_process_data
 from app.models import ProcessRequestBody, ProcessRequestInformations
 from app.schemas import process_request_informations_schema, id_processo_schema, ProcessNumberRegexErrorHandler
-from jinja2 import Environment, PackageLoader, select_autoescape
 
 app = FastAPI()
 validator = Validator(error_handler=ProcessNumberRegexErrorHandler)
