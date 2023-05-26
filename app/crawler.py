@@ -10,7 +10,7 @@ from app.models import ProcessRequestInformations
 from app.utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
 
 ERROR = "ERROR"
-max_concurrency = 1
+max_concurrency = 10000
 sem = asyncio.Semaphore(max_concurrency)
 
 

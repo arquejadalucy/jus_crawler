@@ -78,3 +78,12 @@ coverage report
 coverage html
 ```
 Html coverage report page will be available in [htmlcov/index.html](http://localhost:63342/jus_crawler/htmlcov/index.html)
+
+# Performance
+Na branch ```async-tjal``` encontra-se o código com implementação de processamento assíncrono. Essa funcionalidade reduziu o tempo de resposta da API pela metade, possibilitando a busca e retorno dos dados em menos de 2 segundos (em média).
+
+Porém, uma limitação foi encontrada. Não foi possível estabelecer conexão com o site do TJCE utilizando essa funcionalidade. A mensagem de erro pode ser visualizada abaixo:
+```
+aiohttp.client_exceptions.ClientConnectorSSLError: Cannot connect to host esaj.tjce.jus.br:443 ssl:default [TLS/SSL connection has been closed (EOF)]
+```
+Portanto, atualmente é possível utilizar o processamento assíncrono apenas para buscar informações de processos do TJAL.
