@@ -1,4 +1,15 @@
+from abc import ABC
+
+from cerberus import errors
+
 from app.enums import TRIBUNAIS_VALIDOS, Tribunais
+
+validate_process_number_message = "Número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ."
+
+
+class ProcessNumberRegexErrorHandler(errors.BasicErrorHandler, ABC):
+    messages = errors.BasicErrorHandler.messages.copy()
+    messages[errors.REGEX_MISMATCH.code] = validate_process_number_message
 
 
 def tribunal_suportado(field, value, error):
@@ -6,15 +17,14 @@ def tribunal_suportado(field, value, error):
         error(field, f"Tribunal não suportado. Tribunais válidos: {[tribunal.name for tribunal in Tribunais]}")
 
 
-process_request_body_schema = {
-    'numero_processo': {'type': 'string', 'required': True}
-}
+numero_processo_rules = {'type': 'string',
+                         'required': True,
+                         'regex': "\d\d\d\d\d\d\d-\d\d\.\d\d\d\d\.\d\.\d\d\.\d\d\d\d"}
 
-id_processo_schema = {'id': {'type': 'string',
-                             'regex': "\d\d\d\d\d\d\d-\d\d\.\d\d\d\d\.\d\.\d\d\.\d\d\d\d"}}
+id_processo_schema = {'numero_processo': numero_processo_rules}
 
 process_request_informations_schema = {
-    'numero_processo': {'type': 'string', 'required': True},
+    'numero_processo': numero_processo_rules,
     'foro': {'type': 'string'},
     'numeroDigitoAnoUnificado': {'type': 'string'},
     'tribunal': {'type': 'string',
