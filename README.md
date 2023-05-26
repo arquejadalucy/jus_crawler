@@ -1,7 +1,7 @@
 # jus_crawler
 API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
 
-A api recebe o número do processo. Para descobrir o tribunal é utilizado o [padrão do Conselho Nacional de Justiça para numeração de processos jurídicos](https://www.cnj.jus.br/programas-e-acoes/numeracao-unica/).
+A api recebe o número do processo, que deve seguir o [padrão do Conselho Nacional de Justiça para numeração de processos jurídicos](https://www.cnj.jus.br/programas-e-acoes/numeracao-unica/).
 
 Quando o processamento termina, o usuário é capaz de coletar os dados em formato JSON.
 
