@@ -4,7 +4,7 @@ from cerberus import errors
 
 from app.enums import TRIBUNAIS_VALIDOS, Tribunais
 
-validate_process_number_message = "Número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ."
+validate_process_number_message = "ERROR: Número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ."
 
 
 class ProcessNumberRegexErrorHandler(errors.BasicErrorHandler, ABC):
