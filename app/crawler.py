@@ -77,10 +77,9 @@ async def send_request_and_get_response(url, session):
 
 
 async def search_process_data(process: ProcessRequestInformations):
-    executor = ProcessPoolExecutor(max_workers=3)
     nome_tribunal = Tribunais(process.tribunal).name
     dominio = str(DominiosPorTribunal[nome_tribunal].value)
-    # create an aiohttp session and pass it to each function execution
+
     async with aiohttp.ClientSession() as session:
         tasks = [
             busca_primeiro_grau(process, dominio, session),
@@ -88,7 +87,7 @@ async def search_process_data(process: ProcessRequestInformations):
         ]
         results = await asyncio.gather(*tasks)
 
-        return results
+        return dict((key,d[key]) for d in results for key in d)
 
 
 async def run():

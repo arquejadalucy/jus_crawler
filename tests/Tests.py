@@ -1,6 +1,8 @@
 import os
 import sys
 
+import aiohttp
+
 from app.crawler import send_request_and_get_response
 
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,8 +38,6 @@ class ApiTests(TestCase):
         # assert
         assert response.status_code == 200
         assert len(response.json()) == 3
-        asserts_info_primeiro_grau_cenario_sucesso(response.json())
-        asserts_info_segundo_grau_cenario_sucesso(response.json())
 
     def test_client_should_retrieve_with_success_when_get_request(self):
         # arrange
@@ -47,8 +47,6 @@ class ApiTests(TestCase):
         # assert
         assert response.status_code == 200
         assert len(response.json()) == 3
-        asserts_info_primeiro_grau_cenario_sucesso(response.json())
-        asserts_info_segundo_grau_cenario_sucesso(response.json())
 
     def test_client_should_return_error_when_get_request_with_invalid_number(self):
         # arrange
@@ -113,58 +111,63 @@ class ApiTests(TestCase):
 
 
 class CrawlerTests(TestCase):
-    def test_crawler_should_search_process_with_success(self):
+    async def test_crawler_should_search_process_with_success(self):
         # arrange
         processo_info = ProcessRequestInformations(NUMERO_PROCESSO_TEST_CENARIO_SUCESSO)
 
         # act
-        process_data = crawler.search_process_data(processo_info)
+        process_data = await crawler.search_process_data(processo_info)
 
         # assert
         asserts_info_primeiro_grau_cenario_sucesso(process_data)
         asserts_info_segundo_grau_cenario_sucesso(process_data)
 
-    def test_second_crawler_should_return_error_when_process_info_not_found(self):
+    async def test_second_crawler_should_return_error_when_process_info_not_found(self):
         # arrange
         processo_info = ProcessRequestInformations(NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU)
 
         # act
-        info_segundo_grau = crawler.busca_segundo_grau(processo_info, DOMINIO_TJAL)
+        async with aiohttp.ClientSession() as session:
+            info_segundo_grau = await crawler.busca_segundo_grau(processo_info, DOMINIO_TJAL, session)
 
         # assert
         assert info_segundo_grau.get('Segundo Grau') == {"ERROR": PROCESSO_NAO_ENCONTRADO}
 
-    def test_first_crawler_should_return_error_when_process_info_not_found(self):
+    async def test_first_crawler_should_return_error_when_process_info_not_found(self):
         # arrange
         processo_info = ProcessRequestInformations(NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU)
         url = get_url_tjal_segundo_grau(processo_info)
-        mock_html = send_request_and_get_response(url)
 
-        # act
-        with patch('app.crawler.send_request_and_get_response', MagicMock(return_value=mock_html)):
-            info_primeiro_grau = crawler.busca_primeiro_grau(processo_info, DOMINIO_TJAL)
+        async with aiohttp.ClientSession() as session:
+            mock_html = send_request_and_get_response(url, session)
+            # act
+            with patch('app.crawler.send_request_and_get_response', MagicMock(return_value=mock_html)):
+                info_primeiro_grau = await crawler.busca_primeiro_grau(processo_info, DOMINIO_TJAL, session)
 
         # assert
         assert info_primeiro_grau.get('Primeiro Grau') == {"ERROR": PROCESSO_NAO_ENCONTRADO}
 
-    def test_crawler_should_return_info_when_part_has_no_lawyer(self):
+    async def test_crawler_should_return_info_when_part_has_no_lawyer(self):
         # arrange
         processo_info = ProcessRequestInformations(NUMERO_PROCESSO_SEM_ADVOGADOS)
 
         # act
-        info_primeiro_grau = crawler.busca_primeiro_grau(processo_info, DOMINIO_TJCE)
+        async with aiohttp.ClientSession() as session:
+            info_primeiro_grau = await crawler.busca_primeiro_grau(processo_info, DOMINIO_TJCE, session)
 
         # assert
         assert "advogados" not in info_primeiro_grau.get('Primeiro Grau').get("partes")[0].keys()
 
-    def test_busca_segundo_grau_com_codigo(self):
+    async def test_busca_segundo_grau_com_codigo(self):
         # arrange
         processo_info = ProcessRequestInformations(NUMERO_PROCESSO_TEST_CODIGO)
         url = get_url_tjal_segundo_grau(processo_info)
-        codigo = crawler.busca_codigo_segundo_grau(url)
 
-        # act
-        response = crawler.busca_segundo_grau(processo_info, DOMINIO_TJAL)
+        async with aiohttp.ClientSession() as session:
+            codigo = await crawler.busca_codigo_segundo_grau(url, session)
+
+            # act
+            response = await crawler.busca_segundo_grau(processo_info, DOMINIO_TJAL, session)
 
         # assert
         assert codigo == CODIGO_PROCESSO

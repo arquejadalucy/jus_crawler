@@ -32,7 +32,7 @@ async def buscar_processo(process_request: ProcessRequestBody):
 
 
 @app.get("/processo/{id_processo}")
-def get_processo_info_by_id(id_processo: str):
+async def get_processo_info_by_id(id_processo: str):
     if not valid_process_id(id_processo):
         return validator.errors
 
@@ -40,4 +40,4 @@ def get_processo_info_by_id(id_processo: str):
 
     if not valid_request(processo_info):
         return validator.errors
-    return search_process_data(processo_info)
+    return await search_process_data(processo_info)
