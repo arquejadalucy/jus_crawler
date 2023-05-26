@@ -1,8 +1,5 @@
 from cerberus import Validator
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
 from app.crawler import search_process_data
 from app.models import ProcessRequestBody, ProcessRequestInformations
@@ -12,9 +9,6 @@ app = FastAPI()
 validator = Validator()
 
 
-#
-# app.mount("/static", StaticFiles(directory="static"), name="static")
-# templates = Jinja2Templates(directory="templates")
 def valid_request(processo_info: ProcessRequestInformations):
     return validator.validate(processo_info.__dict__, process_request_informations_schema)
 
@@ -47,4 +41,3 @@ def get_processo_info_by_id(id_processo: str):
     if not valid_request(processo_info):
         return validator.errors
     return search_process_data(processo_info)
-    # return templates.TemplateResponse("process.html", {"request": processo_info, "dados": search_process_data(processo_info)})
