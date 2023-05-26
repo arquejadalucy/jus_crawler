@@ -1,12 +1,15 @@
 from cerberus import Validator
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from app.crawler import search_process_data
 from app.models import ProcessRequestBody, ProcessRequestInformations
-from app.schemas import process_request_informations_schema, id_processo_schema
+from app.schemas import process_request_informations_schema, id_processo_schema, ProcessNumberRegexErrorHandler
 
 app = FastAPI()
-validator = Validator()
+validator = Validator(error_handler=ProcessNumberRegexErrorHandler)
 
 
 def valid_request(processo_info: ProcessRequestInformations):
@@ -14,11 +17,32 @@ def valid_request(processo_info: ProcessRequestInformations):
 
 
 def valid_process_id(numero_processo: str):
-    return validator.validate({"id": numero_processo}, id_processo_schema)
+    return validator.validate({"numero_processo": numero_processo}, id_processo_schema)
 
 
 @app.post("/processo")
 async def buscar_processo(process_request: ProcessRequestBody):
+    """
+    API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
+
+    O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
+
+    Input: {"numero_processo": "string"}
+
+    Output: JSON contendo as seguintes informações:
+
+    * classe
+    * área
+    * assunto
+    * data de distribuição
+    * juiz
+    * valor da ação
+    * partes do processo
+    * lista das movimentações
+    \f
+    :param process_request: User input
+    :return:
+    """
     if not valid_process_id(process_request.numero_processo):
         return validator.errors
 
@@ -33,6 +57,27 @@ async def buscar_processo(process_request: ProcessRequestBody):
 
 @app.get("/processo/{id_processo}")
 async def get_processo_info_by_id(id_processo: str):
+    """
+    API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
+
+    O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
+
+    Input: {"numero_processo": "string"}
+
+    Output: JSON contendo as seguintes informações:
+
+    * classe
+    * área
+    * assunto
+    * data de distribuição
+    * juiz
+    * valor da ação
+    * partes do processo
+    * lista das movimentações
+    \f
+    :param process_request: User input
+    :return:
+    """
     if not valid_process_id(id_processo):
         return validator.errors
 
@@ -41,3 +86,18 @@ async def get_processo_info_by_id(id_processo: str):
     if not valid_request(processo_info):
         return validator.errors
     return await search_process_data(processo_info)
+
+def get_jinja_templates():
+    app.mount("/static", StaticFiles(directory="app/static"), name="static")
+    return Jinja2Templates(directory="app/templates")
+
+
+@app.post('/buscaprocesso', include_in_schema=False)
+def buscar_processo_pelo_form(request: Request, id_processo: str = Form()):
+    result = get_processo_info_by_id(id_processo)
+    return get_jinja_templates().TemplateResponse('processo.html', {'request': request, 'result': result})
+
+
+@app.get('/', response_class=HTMLResponse, include_in_schema=False)
+def main(request: Request):
+    return get_jinja_templates().TemplateResponse('home.html', {'request': request})

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Processo</title>
+    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <h3>Informações do processo {{ result.id }}</h3>
+    {% for key, value in result.items() %}
+        {% if key != "id" %}
+        <h3>{{ key }}</h3>
+        {% if 'ERROR' in result[key] %}
+            <p>{{ result[key] }}</p>
+        {% else %}
+            {% for field in value %}
+                <p>{{ field }}: {{ value[field] }}</p>
+            {% endfor %}
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
+
