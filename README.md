@@ -35,7 +35,7 @@ Exemplos de números de processos podem ser encontrados nos diários oficiais
 
 # Accesso à aplicação
 
-Foi feito deploy da aplicação no Deta Space. 
+Foi feito deploy da aplicação em nuvem com Deta Space. 
 
 **Está disponível em: https://jus_crawler-1-e8456548.deta.app**
 
