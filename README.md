@@ -92,7 +92,7 @@ Swagger API's documentation will be available in http://127.0.0.1:8000/docs
 
 # Tests
 
-## Run tests with coverage
+## Run tests with coverage analysis
 
 ```bash
 coverage run -m pytest tests\Tests.py
