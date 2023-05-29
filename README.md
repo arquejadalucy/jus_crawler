@@ -50,14 +50,6 @@ Exemplos de números de processos podem ser encontrados nos diários oficiais
 | 11. | README.md        | Arquivo atual com a documentação do projeto                                                                          |
 | 12. | requirements.txt | Lista dos pacotes utilizados no projeto                                                                              |
 
-# Access the API
-
-Use the app deployed on Deta Space.
-
-**Application is available at https://jus_crawler-1-e8456548.deta.app**
-
-**Swagger API's documentation: https://jus_crawler-1-e8456548.deta.app/docs**
-
 # Performance
 
 Na branch ```async-tjal``` encontra-se o código com implementação de processamento assíncrono. Essa funcionalidade
