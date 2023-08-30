@@ -63,7 +63,7 @@ Foi feito deploy da aplicação em nuvem com Deta Space.
 Na branch ```async-tjal``` encontra-se o código com implementação de processamento assíncrono. Essa funcionalidade
 reduziu o tempo de resposta da API, possibilitando a busca e retorno dos dados em menos de 2 segundos (em média).
 
-Porém, uma limitação foi encontrada. Não foi possível estabelecer conexão com o site do TJCE utilizando essa
+Porém, uma limitação foi encontrada. Não foi possível manter conexão com o site do TJCE utilizando essa
 funcionalidade. A mensagem de erro pode ser visualizada abaixo:
 
 ```

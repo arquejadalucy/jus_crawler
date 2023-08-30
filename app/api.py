@@ -89,8 +89,8 @@ def get_processo_info_by_id(id_processo: str):
 
 
 def get_jinja_templates():
-    app.mount("/static", StaticFiles(directory="app/static"), name="static")
-    return Jinja2Templates(directory="app/templates")
+    app.mount("/static", StaticFiles(directory="front-end/static"), name="static")
+    return Jinja2Templates(directory="front-end/templates")
 
 
 @app.post('/buscaprocesso', include_in_schema=False)

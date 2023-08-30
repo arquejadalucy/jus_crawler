@@ -1,4 +1,4 @@
-body {
+/*body {
     background-color: #fffff2
 }
 
@@ -36,4 +36,34 @@ textarea {
     vertical-align: top;
     height: 5em;
     resize: vertical;
+}*/
+
+/* Custom CSS for your layout */
+
+/* Header styles */
+header {
+    background-color: #e3f2fd;
+    text-align: center;
 }
+
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+}
+
+
+.responsive{    
+    width: 100%; /* Make the image width 100% of the container */
+    height: auto; /* Automatically adjust the height while maintaining aspect ratio */
+    display: block; /* Remove any extra spacing around the image */
+}
+
+@media (max-width: 830px) {
+    .form-inline {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
