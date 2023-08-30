@@ -75,8 +75,12 @@ Portanto, atualmente é possível utilizar o processamento assíncrono apenas pa
 # How to run locally
 
 ## Install the requirements:
-
 ```bash
+pyenv install 3.11.3
+pyenv virtualenv 3.11.3 env-jus-crawler
+pyenv activate env-jus-crawler
+pyenv local env-jus-crawler # opcional
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
@@ -95,7 +99,7 @@ Swagger API's documentation will be available in http://127.0.0.1:8000/docs
 ## Run tests with coverage analysis
 
 ```bash
-coverage run -m pytest tests\Tests.py
+coverage run -m pytest tests/Tests.py
 ```
 
 ## See coverage report
