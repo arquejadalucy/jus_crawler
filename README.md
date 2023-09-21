@@ -120,7 +120,8 @@ coverage html
 Html coverage report page will be available
 in [htmlcov/index.html](http://localhost:63342/jus_crawler/htmlcov/index.html)
 
-## Next features (TBD)
-- Connect to a database
-- User log in
-- Allow user to save process info to DB
+## Próximas funcionalidades (TBD)
+- Tratar cenário de segredo de justiça
+- Conexão com um banco de dados
+- Permitir log in de usuário
+- Permitir que usuários salvem informações de um processo no BD
