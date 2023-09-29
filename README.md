@@ -41,6 +41,10 @@ Foi feito deploy da aplicação em nuvem com Deta Space.
 
 **A documentação da API pode ser acessada em: https://jus_crawler-1-e8456548.deta.app/docs**
 
+## Como efetuar o deploy
+```
+space push
+```
 # Organização do código
 
 | №   | Path             | Description                                                                                                          |
