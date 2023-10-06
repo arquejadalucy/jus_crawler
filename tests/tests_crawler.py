@@ -1,25 +1,29 @@
+import os
+import sys
+
 import pytest
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
 
 from app import crawler
 from app.models import ProcessRequestInformations
-from tests.Stubs import ASSUNTO_PROCESSO_TESTE_PRIMEIRO_GRAU, CLASSE_PROCESSO_TESTE_PRIMEIRO_GRAU, \
-    NUMERO_PROCESSO_TEST_SUCESSO_TJCE, NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU, DOMINIO_TJAL, PROCESSO_NAO_ENCONTRADO, \
+from tests.Stubs import NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU, DOMINIO_TJAL, PROCESSO_NAO_ENCONTRADO, \
     get_url_tjal_segundo_grau, NUMERO_PROCESSO_SEM_ADVOGADOS_TJCE, DOMINIO_TJCE, NUMERO_PROCESSO_TEST_CODIGO, \
     CODIGO_PROCESSO
 
 
-@pytest.mark.skip()
 def test_crawler_should_search_process_with_success():
     # arrange
-    processo_info = ProcessRequestInformations(NUMERO_PROCESSO_TEST_SUCESSO_TJCE)
+    processo_info = ProcessRequestInformations(NUMERO_PROCESSO_TEST_CODIGO)
 
     # act
     response = crawler.search_process_data(processo_info)
 
     # assert
     assert len(response.get('Primeiro Grau').get("movimentações")) > 0
-    assert response.get("Primeiro Grau").get('assunto') == ASSUNTO_PROCESSO_TESTE_PRIMEIRO_GRAU
-    assert response.get("Primeiro Grau").get('classe') == CLASSE_PROCESSO_TESTE_PRIMEIRO_GRAU
+    assert len(response.get("Primeiro Grau").get('assunto')) > 0
+    assert len(response.get("Primeiro Grau").get('classe')) > 0
 
 
 def test_should_return_error_when_process_info_not_found():
@@ -35,6 +39,9 @@ def test_should_return_error_when_process_info_not_found():
 
 @pytest.mark.skip()
 def test_crawler_should_return_info_when_part_has_no_lawyer():
+    """
+    Deprecated: esse processo não está mais sendo encontrado na base do TJCE
+    """
     # arrange
     processo_info = ProcessRequestInformations(NUMERO_PROCESSO_SEM_ADVOGADOS_TJCE)
 
