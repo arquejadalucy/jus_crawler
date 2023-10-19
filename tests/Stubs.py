@@ -1,4 +1,4 @@
-from app.enums import DominiosPorTribunal
+from app.tribunais_mapper import DominiosPorTribunal
 from app.models import ProcessRequestInformations
 
 TRIBUNAL_NAO_SUPORTADO = "Tribunal não suportado."
