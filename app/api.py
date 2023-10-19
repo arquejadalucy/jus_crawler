@@ -27,7 +27,7 @@ async def buscar_processo(process_request: ProcessRequestBody):
 
     O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
 
-    Input: {"numero_processo": "string"}
+    Input: JSON contendo o número do processo - {"numero_processo": "string"}
 
     Output: JSON contendo as seguintes informações:
 
@@ -62,7 +62,7 @@ async def get_processo_info_by_id(id_processo: str):
 
     O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
 
-    Input: {"numero_processo": "string"}
+    Input: Número do processo
 
     Output: JSON contendo as seguintes informações:
 
@@ -88,8 +88,8 @@ async def get_processo_info_by_id(id_processo: str):
     return await search_process_data(processo_info)
 
 def get_jinja_templates():
-    app.mount("/static", StaticFiles(directory="app/static"), name="static")
-    return Jinja2Templates(directory="app/templates")
+    app.mount("/static", StaticFiles(directory="front-end/static"), name="static")
+    return Jinja2Templates(directory="front-end/templates")
 
 
 @app.post('/buscaprocesso', include_in_schema=False)

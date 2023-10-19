@@ -1,6 +1,6 @@
 # jus_crawler
 
-API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
+API que busca dados de um processo em todos os graus dos Tribunais de Justiça de São Paulo (TJSP), Alagoas (TJAL) e do Ceará (TJCE).
 
 A api recebe o número do processo, que deve seguir
 o [padrão do Conselho Nacional de Justiça para numeração de processos jurídicos](https://www.cnj.jus.br/programas-e-acoes/numeracao-unica/).
@@ -30,9 +30,22 @@ Dados coletados:
 ---
 Exemplos de números de processos podem ser encontrados nos diários oficiais
 
-* Diário oficial de Alagoas: https://www.jusbrasil.com.br/diarios/DJAL/
-* Diário de justiça do estado do Ceará: https://www.jusbrasil.com.br/diarios/DJCE/
+* Diário oficial de Alagoas: [jusbrasil.com.br/diarios/DJAL/](https://www.jusbrasil.com.br/diarios/DJSP/)
+* Diário de justiça do estado do Ceará: [jusbrasil.com.br/diarios/DJCE/](https://www.jusbrasil.com.br/diarios/DJSP/)
+* Diário de justiça do estado de São Paulo: [jusbrasil.com.br/diarios/DJSP/](https://www.jusbrasil.com.br/diarios/DJSP/)
 
+# Accesso à aplicação
+
+Foi feito deploy da aplicação em nuvem com Deta Space. 
+
+**Está disponível em: https://jus_crawler-1-e8456548.deta.app**
+
+**A documentação da API pode ser acessada em: https://jus_crawler-1-e8456548.deta.app/docs**
+
+## Como efetuar o deploy
+```
+space push
+```
 # Organização do código
 
 | №   | Path             | Description                                                                                                          |
@@ -66,9 +79,13 @@ Portanto, atualmente é possível utilizar o processamento assíncrono apenas pa
 
 # How to run locally
 
-## Install the requirements:
-
+### Using [pyenv](https://github.com/pyenv/pyenv-installer)
 ```bash
+pyenv install 3.11.3
+pyenv virtualenv 3.11.3 env-jus_crawler
+pyenv activate env-jus_crawler
+pyenv local env-jus_crawler # opcional
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
@@ -84,10 +101,10 @@ Swagger API's documentation will be available in http://127.0.0.1:8000/docs
 
 # Tests
 
-## Run tests with coverage
+## Run tests with coverage analysis
 
 ```bash
-coverage run -m pytest tests\Tests.py
+coverage run -m pytest tests/Tests.py
 ```
 
 ## See coverage report
@@ -105,3 +122,8 @@ coverage html
 Html coverage report page will be available
 in [htmlcov/index.html](http://localhost:63342/jus_crawler/htmlcov/index.html)
 
+## Próximas funcionalidades (TBD)
+- Tratar cenário de segredo de justiça
+- Conexão com um banco de dados
+- Permitir log in de usuário
+- Permitir que usuários salvem informações de um processo no BD

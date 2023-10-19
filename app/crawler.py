@@ -5,7 +5,7 @@ from concurrent.futures import ProcessPoolExecutor
 import aiohttp
 from bs4 import BeautifulSoup
 
-from app.enums import Tribunais, DominiosPorTribunal
+from app.tribunais_mapper import Tribunais, DominiosPorTribunal
 from app.models import ProcessRequestInformations
 from app.utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
 
