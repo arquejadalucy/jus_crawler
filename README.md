@@ -80,8 +80,6 @@ Portanto, atualmente é possível utilizar o processamento assíncrono apenas pa
 # How to run locally
 
 ### Using [pyenv](https://github.com/pyenv/pyenv-installer)
-
-
 ```bash
 pyenv install 3.11.3
 pyenv virtualenv 3.11.3 env-jus_crawler
