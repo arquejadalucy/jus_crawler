@@ -75,6 +75,7 @@ async def get_processo_info_by_id(id_processo: str):
     * partes do processo
     * lista das movimentações
     \f
+    :param id_processo:
     :param process_request: User input
     :return:
     """
@@ -86,6 +87,7 @@ async def get_processo_info_by_id(id_processo: str):
     if not valid_request(processo_info):
         return validator.errors
     return await search_process_data(processo_info)
+
 
 def get_jinja_templates():
     app.mount("/static", StaticFiles(directory="front-end/static"), name="static")
