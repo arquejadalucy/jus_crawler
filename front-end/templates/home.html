@@ -4,34 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Busca Processo</title>
-    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    <!--<link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    
+
 <header>
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
           <span class="navbar-text">
-            <h3>Busca de Processos Jurídicos por Número</h3>
+            <h3 id="titleSearch">Busca de Processos Jurídicos por Numeração</h3>
           </span>
         </div>
-      </nav>
+    </nav>
 </header>
+<div style="width: 478px; height: 56px; padding-top: 16px; padding-bottom: 16px; padding-left: 40px; padding-right: 160px; background: #F5F5F5; border-radius: 40px; border: 5px white solid; justify-content: flex-start; align-items: center; gap: 10px; display: inline-flex">
+    <div><span
+            style="color: #979797; font-size: 20px; font-family: Montserrat; font-weight: 400; word-wrap: break-word">Search whatever you wan</span><span
+            style="color: #979797; font-size: 20px; font-family: Montserrat; font-weight: 400; letter-spacing: 0.20px; word-wrap: break-word">t...</span>
+    </div>
+    <div style="width: 168px; height: 56px; padding-top: 16px; padding-bottom: 16px; padding-left: 48px; padding-right: 32px; background: rgba(0, 163.20, 255, 0.20); border-top-left-radius: 40px; border-top-right-radius: 40px; justify-content: flex-end; align-items: center; gap: 10px; display: inline-flex">
+        <div style="color: #00A3FF; font-size: 20px; font-family: Montserrat; font-weight: 600; text-transform: uppercase; letter-spacing: 0.20px; word-wrap: break-word">
+            Search
+        </div>
+    </div>
+
+</div>
 
 <div class="container-fluid">
     <form class="form-inline" method="post" action="/buscaprocesso">
         <div class="form-group m-2">
             <label for="id_processo" class="sr-only">Número do processo</label>
-            <input id="id_processo" type="text" name="id_processo" 
-            placeholder="Número do processo" class="form-control">
+            <input id="id_processo" type="text" name="id_processo"
+                   placeholder="Número do processo" class="form-control">
             <button type="submit" class="btn btn-primary m-2">buscar</button>
         </div>
-        
+
     </form>
 </div>
 <footer>
-    footer
+    
 </footer>
 <!-- Include Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
