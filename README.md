@@ -15,6 +15,9 @@ Endereços utilizados para as consultas de processos:
 * TJCE
     * 1º grau - https://esaj.tjce.jus.br/cpopg/open.do
     * 2º grau - https://esaj.tjce.jus.br/cposg5/open.do
+ * TJSP
+   * 1º grau - https://esaj.tjsp.jus.br/cpopg/open.do
+   * 2º grau - https://esaj.tjsp.jus.br/cposg/open.do
 
 Dados coletados:
 
