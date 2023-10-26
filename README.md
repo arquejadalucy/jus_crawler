@@ -95,7 +95,7 @@ pip install -r requirements.txt
 ## Start the service:
 
 ```bash
-uvicorn controller.routes:app --reload
+uvicorn source.controller.routes:app --reload
 ```
 
 App will be available in http://127.0.0.1:8000
