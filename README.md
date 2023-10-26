@@ -51,20 +51,19 @@ space push
 ```
 # Organização do código
 
-| №   | Path             | Description                                                                                                          |
-|-----|------------------|----------------------------------------------------------------------------------------------------------------------|
-| 1.  | app/             | Diretório com toda a lógica do projeto                                                                               |
-| 2.  | app/api.py       | Métodos/endpoints da API                                                                                             |
-| 3.  | app/crawler.py   | Implementação do crawler com métodos de busca e parsing dos dados                                                    |
-| 4.  | app/enums.py     | Estruturas que concentram todas as informações necessárias dos tribunais suportados (nome, número e domínio do site) |
-| 5.  | app/models.py    | Classes para informações necessárias para processar as requisições da API                                            |
-| 6.  | app/schemas.py   | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org)        |
-| 7.  | app/utils.py     | Métodos utilizados pelo crawler para parsing dos dados                                                               |
-| 8.  | tests/           | Diretório com os testes do projeto                                                                                   |
-| 9.  | tests/Stubs.py   | Arquivo com dados utilizados nos testes                                                                              |
-| 10. | tests/Tests.py   | Classes de testes automatizados                                                                                      |
-| 11. | README.md        | Arquivo atual com a documentação do projeto                                                                          |
-| 12. | requirements.txt | Lista dos pacotes utilizados no projeto                                                                              |
+| №   | Path                                | Description                                                                                                          |
+|-----|-------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| 1.  | source/                             | Diretório com toda a lógica do projeto                                                                               |
+| 2.  | source/controller                   | Métodos/endpoints da API                                                                                             |
+| 5.  | source/models                       | Classes com informações necessárias para processar as requisições da API                                             |
+| 3.  | source/services/collect.py          | Implementação do crawler com métodos de busca e parsing dos dados                                                    |
+| 7.  | source/services/parse.py            | Métodos utilizados pelo crawler para parsing dos dados                                                               |
+| 4.  | source/services/tribunais_mapper.py | Estruturas que concentram todas as informações necessárias dos tribunais suportados (nome, número e domínio do site) |
+| 6.  | source/services/validate.py         | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org)        |
+| 5.  | front-end/                          | Diretório contendo arquivos estáticos e templates HTML                                                               |
+| 8.  | tests/                              | Diretório com os testes do projeto                                                                                   |
+| 11. | README.md                           | Arquivo atual com a documentação do projeto                                                                          |
+| 12. | requirements.txt                    | Lista dos pacotes utilizados no projeto                                                                              |
 
 # Performance
 
