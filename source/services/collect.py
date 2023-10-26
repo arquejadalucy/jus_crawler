@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from source.services.tribunais_mapper import Tribunais, DominiosPorTribunal
-from source.models.Processo import Processo
+from source.models.NumeroProcessoInfo import Processo
 from source.services.parse import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
 
 ERROR = "ERROR"

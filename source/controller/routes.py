@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from source.services.collect import search_process_data
-from source.models.Processo import Processo
+from source.models.NumeroProcessoInfo import Processo
 from source.models.ProcessoRequestBody import ProcessRequestBody
 from source.services.validate import process_request_informations_schema, id_processo_schema, \
     ProcessNumberRegexErrorHandler

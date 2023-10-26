@@ -1,5 +1,5 @@
 from source.services.tribunais_mapper import DominiosPorTribunal
-from source.models.Processo import Processo
+from source.models.NumeroProcessoInfo import Processo
 
 TRIBUNAL_NAO_SUPORTADO = "Tribunal não suportado."
 

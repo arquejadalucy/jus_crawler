@@ -8,7 +8,7 @@ from source.services import collect
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(parent_dir)
 
-from source.models.Processo import Processo
+from source.models.NumeroProcessoInfo import Processo
 from tests.Stubs import NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU, DOMINIO_TJAL, PROCESSO_NAO_ENCONTRADO, \
     get_url_tjal_segundo_grau, NUMERO_PROCESSO_SEM_ADVOGADOS_TJCE, DOMINIO_TJCE, NUMERO_PROCESSO_TEST_CODIGO, \
     CODIGO_PROCESSO
