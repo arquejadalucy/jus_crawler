@@ -1,6 +1,6 @@
 import re
 
-from app.models import Parte, ParteComAdvogados
+from source.models.Parte import Parte
 
 
 def parse_data(html):
@@ -69,7 +69,7 @@ def get_partes(html):
         nomes = clean_data(nomes_result.get_text()) if nomes_result else ""
         tipo_participacao = clean_data(tipo_participacao_result.text) if tipo_participacao_result else ""
         parte_obj = get_parte_obj(nomes, tipo_participacao)
-        partes_list.append(parte_obj.dict())
+        partes_list.append(parte_obj.__dict__)
     return partes_list
 
 
@@ -77,9 +77,7 @@ def get_parte_obj(nomes, tipo_de_participacao: str):
     partes = re.split(" Advogado: | Advogada: ", nomes)
     nome = clean_data(partes[0])
     advogados = [clean_data(adv) for adv in partes[1::]]
-    if advogados:
-        return ParteComAdvogados(nome=nome, tipo_de_participacao=tipo_de_participacao, advogados=advogados)
-    return Parte(nome=nome, tipo_de_participacao=tipo_de_participacao)
+    return Parte(nome, tipo_de_participacao, advogados)
 
 
 def clean_data(data: str):

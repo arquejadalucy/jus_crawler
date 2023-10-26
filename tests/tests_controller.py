@@ -8,8 +8,8 @@ sys.path.append(parent_dir)
 
 from fastapi.testclient import TestClient
 
-from app.api import app
-from app.schemas import validate_process_number_message
+from source.controller.routes import app
+from source.services.validate import validate_process_number_message
 from Stubs import get_request_body_json_test, \
     NUMERO_PROCESSO_TRIBUNAL_INVALIDO, TRIBUNAL_NAO_SUPORTADO, \
     NUMERO_PROCESSO_TEST_CODIGO, NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU
