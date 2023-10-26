@@ -1,20 +1,4 @@
-from pydantic import BaseModel
-
-
-class ProcessRequestBody(BaseModel):
-    numero_processo: str
-
-
-class Parte(BaseModel):
-    nome: str
-    tipo_de_participacao: str
-
-
-class ParteComAdvogados(Parte):
-    advogados: list
-
-
-class ProcessRequestInformations(object):
+class Processo(object):
     numero_processo: str
     foro: str
     numeroDigitoAnoUnificado: str
