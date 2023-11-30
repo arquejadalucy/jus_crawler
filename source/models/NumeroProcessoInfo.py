@@ -1,3 +1,5 @@
+
+
 class NumeroProcessoInfo(object):
     numero_processo: str
     foro: str

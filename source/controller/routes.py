@@ -23,7 +23,7 @@ def valid_process_id(numero_processo: str):
 
 
 @app.post("/processo")
-def buscar_processo(process_request: ProcessRequestBody):
+async def buscar_processo(process_request: ProcessRequestBody):
     """
     API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
 
@@ -53,12 +53,12 @@ def buscar_processo(process_request: ProcessRequestBody):
     if not valid_request(processo_info):
         return validator.errors
 
-    response = search_process_data(processo_info)
+    response = await search_process_data(processo_info)
     return response
 
 
 @app.get("/processo/{id_processo}")
-def get_processo_info_by_id(id_processo: str):
+async def get_processo_info_by_id(id_processo: str):
     """
     API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
 
@@ -77,6 +77,7 @@ def get_processo_info_by_id(id_processo: str):
     * partes do processo
     * lista das movimentações
     \f
+    :param id_processo:
     :param process_request: User input
     :return:
     """
@@ -87,7 +88,7 @@ def get_processo_info_by_id(id_processo: str):
 
     if not valid_request(processo_info):
         return validator.errors
-    return search_process_data(processo_info)
+    return await search_process_data(processo_info)
 
 
 def get_jinja_templates():
