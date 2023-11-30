@@ -4,13 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 
 from source.services.tribunais_mapper import Tribunais, DominiosPorTribunal
-from source.models.Processo import Processo
+from source.models.NumeroProcessoInfo import NumeroProcessoInfo
 from source.services.parse import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
 
 ERROR = "ERROR"
 
 
-def busca_primeiro_grau(processo: Processo, dominio: str):
+def busca_primeiro_grau(processo: NumeroProcessoInfo, dominio: str):
     data = {"id": processo.numero_processo}
     url = f"https://{dominio}/cpopg/show.do?&processo.foro={processo.foro}" \
           f"&processo.numero={processo.numero_processo}"
@@ -40,7 +40,7 @@ def busca_codigo_segundo_grau(url: str):
     return codigo
 
 
-def busca_segundo_grau(processo: Processo, dominio: str):
+def busca_segundo_grau(processo: NumeroProcessoInfo, dominio: str):
     data = {"id": processo.numero_processo}
     url = f"https://{dominio}/cposg5/search.do?" \
           f"cbPesquisa=NUMPROC&numeroDigitoAnoUnificado={processo.numeroDigitoAnoUnificado}" \
@@ -72,7 +72,7 @@ def send_request_and_get_response(url):
     return result
 
 
-def search_process_data(process: Processo):
+def search_process_data(process: NumeroProcessoInfo):
     nome_tribunal = Tribunais(process.tribunal).name
     dominio = str(DominiosPorTribunal[nome_tribunal].value)
     data = busca_primeiro_grau(process, dominio)

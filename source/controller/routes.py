@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from source.services.collect import search_process_data
-from source.models.Processo import Processo
+from source.models.NumeroProcessoInfo import NumeroProcessoInfo
 from source.models.ProcessoRequestBody import ProcessRequestBody
 from source.services.validate import process_request_informations_schema, id_processo_schema, \
     ProcessNumberRegexErrorHandler
@@ -14,7 +14,7 @@ app = FastAPI()
 validator = Validator(error_handler=ProcessNumberRegexErrorHandler)
 
 
-def valid_request(processo_info: Processo):
+def valid_request(processo_info: NumeroProcessoInfo):
     return validator.validate(processo_info.__dict__, process_request_informations_schema)
 
 
@@ -48,7 +48,7 @@ def buscar_processo(process_request: ProcessRequestBody):
     if not valid_process_id(process_request.numero_processo):
         return validator.errors
 
-    processo_info = Processo(process_request.numero_processo)
+    processo_info = NumeroProcessoInfo(process_request.numero_processo)
 
     if not valid_request(processo_info):
         return validator.errors
@@ -83,7 +83,7 @@ def get_processo_info_by_id(id_processo: str):
     if not valid_process_id(id_processo):
         return validator.errors
 
-    processo_info = Processo(id_processo)
+    processo_info = NumeroProcessoInfo(id_processo)
 
     if not valid_request(processo_info):
         return validator.errors

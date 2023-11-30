@@ -1,5 +1,5 @@
 from source.services.tribunais_mapper import DominiosPorTribunal
-from source.models.Processo import Processo
+from source.models.NumeroProcessoInfo import NumeroProcessoInfo
 
 TRIBUNAL_NAO_SUPORTADO = "Tribunal não suportado."
 
@@ -24,7 +24,7 @@ def get_request_body_json_test(numero_processo: str):
     return {"numero_processo": numero_processo}
 
 
-def get_url_tjal_segundo_grau(processo_info: Processo):
+def get_url_tjal_segundo_grau(processo_info: NumeroProcessoInfo):
     return f"https://{DOMINIO_TJAL}/cposg5/search.do?conversationId=&paginaConsulta=0&cbPesquisa=NUMPROC" \
            f"&numeroDigitoAnoUnificado={processo_info.numeroDigitoAnoUnificado}" \
            f"&foroNumeroUnificado={processo_info.foro}&dePesquisaNuUnificado={processo_info.numero_processo}" \

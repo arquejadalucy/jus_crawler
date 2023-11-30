@@ -1,5 +1,6 @@
 import re
 
+from source.models.Movimentacao import Movimentacao
 from source.models.Parte import Parte
 
 
@@ -23,38 +24,43 @@ def parse_data(html):
 
 def parse_data_primeiro_grau(html):
     data1 = parse_data(html)
-    data1.update({'movimentações': get_movimentos_primeiro_grau(html)})
+    data1.update({'movimentações': get_movimentos(grau=1, html=html)})
     return data1
 
 
 def parse_data_segundo_grau(html):
     data2 = parse_data(html)
-    data2.update({'movimentações': get_movimentos_segundo_grau(html)})
+    data2.update({'movimentações': get_movimentos(grau=2, html=html)})
     return data2
 
 
-def get_movimentos_primeiro_grau(html):
+def get_movimentos(grau, html):
+    tags_por_grau = {
+        1: {
+            "container": ".containerMovimentacao",
+            "data": 'dataMovimentacao',
+            "descricao": "descricaoMovimentacao"
+        },
+        2: {
+            "container": ".movimentacaoProcesso",
+            "data": 'dataMovimentacaoProcesso',
+            "descricao": "descricaoMovimentacaoProcesso"
+        }
+    }
     movimentos_list = []
-    movimentos = html.select(".containerMovimentacao")
+    tags = tags_por_grau.get(grau)
+    movimentos = html.select(tags.get("container"))
     for movimento in movimentos:
-        data_movimento = clean_data(movimento.find(class_='dataMovimentacao').text)
+        data_movimento = clean_data(
+            movimento.find(class_=tags.get("data")).text)
 
-        descricao_movimento = clean_data(movimento.find(class_='descricaoMovimentacao').text)
+        descricao_movimento = clean_data(
+            movimento.find(class_=tags.get("descricao")).text)
 
-        movimentos_list.append({"data_movimentação": data_movimento,
-                                "descrição_movimentação": " ".join(descricao_movimento.split())})
-    return movimentos_list
-
-
-def get_movimentos_segundo_grau(html):
-    movimentos = html.select('.movimentacaoProcesso')
-    movimentos_list = []
-    for movimento in movimentos:
-        data_movimento = clean_data(movimento.find(class_='dataMovimentacaoProcesso').text)
-        descricao_movimento = clean_data(movimento.find(class_='descricaoMovimentacaoProcesso').text)
-
-        movimentos_list.append({"data_movimentação": data_movimento,
-                                "descrição_movimentação": " ".join(descricao_movimento.split())})
+        movimentos_list.append(
+            Movimentacao(data=data_movimento,
+                         descricao=" ".join(descricao_movimento.split()))
+        )
     return movimentos_list
 
 

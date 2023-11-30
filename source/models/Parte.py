@@ -1,3 +1,8 @@
+from bson import ObjectId
+
+from source.services.dict_to_obj import DictObj
+
+
 class Parte(object):
     nome: str
     tipo_de_participacao: str

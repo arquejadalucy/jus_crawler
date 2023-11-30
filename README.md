@@ -1,4 +1,4 @@
-# jus_crawler
+# jus-crawler
 
 API que busca dados de um processo em todos os graus dos Tribunais de Justiça de São Paulo (TJSP), Alagoas (TJAL) e do Ceará (TJCE).
 
