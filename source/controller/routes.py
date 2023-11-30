@@ -1,3 +1,6 @@
+import firebase_admin
+import pyrebase
+from firebase_admin import credentials
 from cerberus import Validator
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
@@ -13,6 +16,24 @@ from source.services.validate import process_request_informations_schema, id_pro
 app = FastAPI()
 validator = Validator(error_handler=ProcessNumberRegexErrorHandler)
 
+if not firebase_admin._apps:
+    cred = credentials.Certificate("/Users/lucyvelasco/PycharmProjects/jus_crawler/serviceAccount.json")
+    firebase_admin.initialize_app(cred)
+
+firebaseConfig = {
+  "apiKey": "AIzaSyDp_XqMeP6rQ061y6M9mtlPp-JFatYBa-4",
+  "authDomain": "crawler-jus.firebaseapp.com",
+  "databaseURL": "https://crawler-jus-default-rtdb.firebaseio.com",
+  "projectId": "crawler-jus",
+  "storageBucket": "crawler-jus.appspot.com",
+  "messagingSenderId": "654136178133",
+  "appId": "1:654136178133:web:42658f521054817806395c",
+  "measurementId": "G-QN0D2Q1SF7"
+}
+
+firebase = pyrebase.initialize_app(firebaseConfig)
+
+
 
 def valid_request(processo_info: NumeroProcessoInfo):
     return validator.validate(processo_info.__dict__, process_request_informations_schema)
@@ -20,6 +41,21 @@ def valid_request(processo_info: NumeroProcessoInfo):
 
 def valid_process_id(numero_processo: str):
     return validator.validate({"numero_processo": numero_processo}, id_processo_schema)
+
+
+@app.post("/cadastro")
+async def create_an_account():
+    pass
+
+
+@app.post("/login")
+async def create_access_token():
+    pass
+
+
+@app.post("/ping")
+async def validate_token():
+    pass
 
 
 @app.post("/processo")
