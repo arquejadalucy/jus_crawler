@@ -1,4 +1,4 @@
-class Processo(object):
+class NumeroProcessoInfo(object):
     numero_processo: str
     foro: str
     numeroDigitoAnoUnificado: str

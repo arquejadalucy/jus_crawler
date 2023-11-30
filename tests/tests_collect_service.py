@@ -8,7 +8,7 @@ from source.services import collect
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(parent_dir)
 
-from source.models.NumeroProcessoInfo import Processo
+from source.models.NumeroProcessoInfo import NumeroProcessoInfo
 from tests.Stubs import NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU, DOMINIO_TJAL, PROCESSO_NAO_ENCONTRADO, \
     get_url_tjal_segundo_grau, NUMERO_PROCESSO_SEM_ADVOGADOS_TJCE, DOMINIO_TJCE, NUMERO_PROCESSO_TEST_CODIGO, \
     CODIGO_PROCESSO
@@ -16,7 +16,7 @@ from tests.Stubs import NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU, DOMINIO_TJAL, 
 
 def test_collect_should_search_process_with_success():
     # arrange
-    processo_info = Processo(NUMERO_PROCESSO_TEST_CODIGO)
+    processo_info = NumeroProcessoInfo(NUMERO_PROCESSO_TEST_CODIGO)
 
     # act
     response = collect.search_process_data(processo_info)
@@ -29,7 +29,7 @@ def test_collect_should_search_process_with_success():
 
 def test_should_return_error_when_process_info_not_found():
     # arrange
-    processo_info = Processo(NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU)
+    processo_info = NumeroProcessoInfo(NUMERO_PROCESSO_SEM_INFO_NO_SEGUNDO_GRAU)
 
     # act
     collect_response = collect.busca_segundo_grau(processo_info, DOMINIO_TJAL)
@@ -44,7 +44,7 @@ def test_collect_should_return_info_when_part_has_no_lawyer():
     Deprecated: esse processo não existe mais na base do TJCE
     """
     # arrange
-    processo_info = Processo(NUMERO_PROCESSO_SEM_ADVOGADOS_TJCE)
+    processo_info = NumeroProcessoInfo(NUMERO_PROCESSO_SEM_ADVOGADOS_TJCE)
 
     # act
     info_primeiro_grau = collect.busca_primeiro_grau(processo_info, DOMINIO_TJCE)
@@ -55,7 +55,7 @@ def test_collect_should_return_info_when_part_has_no_lawyer():
 
 def test_busca_segundo_grau_com_codigo():
     # arrange
-    processo_info = Processo(NUMERO_PROCESSO_TEST_CODIGO)
+    processo_info = NumeroProcessoInfo(NUMERO_PROCESSO_TEST_CODIGO)
     url = get_url_tjal_segundo_grau(processo_info)
     codigo = collect.busca_codigo_segundo_grau(url)
 
