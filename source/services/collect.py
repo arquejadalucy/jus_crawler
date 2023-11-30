@@ -5,16 +5,16 @@ from concurrent.futures import ProcessPoolExecutor
 import aiohttp
 from bs4 import BeautifulSoup
 
-from app.tribunais_mapper import Tribunais, DominiosPorTribunal
-from app.models import ProcessRequestInformations
-from app.utils import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
+from source.services.tribunais_mapper import Tribunais, DominiosPorTribunal
+from source.models.NumeroProcessoInfo import NumeroProcessoInfo
+from source.services.parse import parse_data_primeiro_grau, parse_data_segundo_grau, clean_data
 
 ERROR = "ERROR"
 max_concurrency = 10000
 sem = asyncio.Semaphore(max_concurrency)
 
 
-async def busca_primeiro_grau(processo: ProcessRequestInformations, dominio: str, session):
+async def busca_primeiro_grau(processo: NumeroProcessoInfo, dominio: str, session):
     data = {"id": processo.numero_processo}
     url = f"https://{dominio}/cpopg/show.do?&processo.foro={processo.foro}" \
           f"&processo.numero={processo.numero_processo}"
@@ -44,7 +44,7 @@ async def busca_codigo_segundo_grau(url: str, session):
     return codigo
 
 
-async def busca_segundo_grau(processo: ProcessRequestInformations, dominio: str, session):
+async def busca_segundo_grau(processo: NumeroProcessoInfo, dominio: str, session):
     data = {"id": processo.numero_processo}
     url = f"https://{dominio}/cposg5/search.do?" \
           f"cbPesquisa=NUMPROC&numeroDigitoAnoUnificado={processo.numeroDigitoAnoUnificado}" \
@@ -76,7 +76,7 @@ async def send_request_and_get_response(url, session):
         return result
 
 
-async def search_process_data(process: ProcessRequestInformations):
+async def search_process_data(process: NumeroProcessoInfo):
     nome_tribunal = Tribunais(process.tribunal).name
     dominio = str(DominiosPorTribunal[nome_tribunal].value)
 
@@ -91,7 +91,7 @@ async def search_process_data(process: ProcessRequestInformations):
 
 
 async def run():
-    processo = ProcessRequestInformations('0710802-55.2018.8.02.0001')
+    processo = NumeroProcessoInfo('0710802-55.2018.8.02.0001')
     print(await search_process_data(processo))
 
 

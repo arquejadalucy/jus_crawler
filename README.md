@@ -1,4 +1,4 @@
-# jus_crawler
+# jus-crawler
 
 API que busca dados de um processo em todos os graus dos Tribunais de Justiça de São Paulo (TJSP), Alagoas (TJAL) e do Ceará (TJCE).
 
@@ -15,6 +15,9 @@ Endereços utilizados para as consultas de processos:
 * TJCE
     * 1º grau - https://esaj.tjce.jus.br/cpopg/open.do
     * 2º grau - https://esaj.tjce.jus.br/cposg5/open.do
+ * TJSP
+   * 1º grau - https://esaj.tjsp.jus.br/cpopg/open.do
+   * 2º grau - https://esaj.tjsp.jus.br/cposg/open.do
 
 Dados coletados:
 
@@ -48,20 +51,19 @@ space push
 ```
 # Organização do código
 
-| №   | Path             | Description                                                                                                          |
-|-----|------------------|----------------------------------------------------------------------------------------------------------------------|
-| 1.  | app/             | Diretório com toda a lógica do projeto                                                                               |
-| 2.  | app/api.py       | Métodos/endpoints da API                                                                                             |
-| 3.  | app/crawler.py   | Implementação do crawler com métodos de busca e parsing dos dados                                                    |
-| 4.  | app/enums.py     | Estruturas que concentram todas as informações necessárias dos tribunais suportados (nome, número e domínio do site) |
-| 5.  | app/models.py    | Classes para informações necessárias para processar as requisições da API                                            |
-| 6.  | app/schemas.py   | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org)        |
-| 7.  | app/utils.py     | Métodos utilizados pelo crawler para parsing dos dados                                                               |
-| 8.  | tests/           | Diretório com os testes do projeto                                                                                   |
-| 9.  | tests/Stubs.py   | Arquivo com dados utilizados nos testes                                                                              |
-| 10. | tests/Tests.py   | Classes de testes automatizados                                                                                      |
-| 11. | README.md        | Arquivo atual com a documentação do projeto                                                                          |
-| 12. | requirements.txt | Lista dos pacotes utilizados no projeto                                                                              |
+| №   | Path                                | Description                                                                                                          |
+|-----|-------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| 1.  | source/                             | Diretório com toda a lógica do projeto                                                                               |
+| 2.  | source/controller                   | Métodos/endpoints da API                                                                                             |
+| 3.  | source/models                       | Classes com informações necessárias para processar as requisições da API                                             |
+| 4.  | source/services/collect.py          | Implementação do crawler com métodos de busca e parsing dos dados                                                    |
+| 5.  | source/services/parse.py            | Métodos utilizados pelo crawler para parsing dos dados                                                               |
+| 6.  | source/services/tribunais_mapper.py | Estruturas que concentram todas as informações necessárias dos tribunais suportados (nome, número e domínio do site) |
+| 7.  | source/services/validate.py         | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org)        |
+| 8.  | front-end/                          | Diretório contendo arquivos estáticos e templates HTML                                                               |
+| 9.  | tests/                              | Diretório com os testes do projeto                                                                                   |
+| 10. | README.md                           | Arquivo atual com a documentação do projeto                                                                          |
+| 11. | requirements.txt                    | Lista dos pacotes utilizados no projeto                                                                              |
 
 # Performance
 
@@ -92,7 +94,7 @@ pip install -r requirements.txt
 ## Start the service:
 
 ```bash
-uvicorn app.api:app --reload
+uvicorn source.controller.routes:app --reload
 ```
 
 App will be available in http://127.0.0.1:8000
@@ -104,7 +106,8 @@ Swagger API's documentation will be available in http://127.0.0.1:8000/docs
 ## Run tests with coverage analysis
 
 ```bash
-coverage run -m pytest tests/Tests.py
+coverage run -m pytest tests/test_controller.py
+coverage run -m pytest tests/test_collect_service.py
 ```
 
 ## See coverage report
