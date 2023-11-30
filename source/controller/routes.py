@@ -21,18 +21,17 @@ if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 
 firebaseConfig = {
-  "apiKey": "AIzaSyDp_XqMeP6rQ061y6M9mtlPp-JFatYBa-4",
-  "authDomain": "crawler-jus.firebaseapp.com",
-  "databaseURL": "https://crawler-jus-default-rtdb.firebaseio.com",
-  "projectId": "crawler-jus",
-  "storageBucket": "crawler-jus.appspot.com",
-  "messagingSenderId": "654136178133",
-  "appId": "1:654136178133:web:42658f521054817806395c",
-  "measurementId": "G-QN0D2Q1SF7"
+    "apiKey": "AIzaSyDp_XqMeP6rQ061y6M9mtlPp-JFatYBa-4",
+    "authDomain": "crawler-jus.firebaseapp.com",
+    "databaseURL": "https://crawler-jus-default-rtdb.firebaseio.com",
+    "projectId": "crawler-jus",
+    "storageBucket": "crawler-jus.appspot.com",
+    "messagingSenderId": "654136178133",
+    "appId": "1:654136178133:web:42658f521054817806395c",
+    "measurementId": "G-QN0D2Q1SF7"
 }
 
 firebase = pyrebase.initialize_app(firebaseConfig)
-
 
 
 def valid_request(processo_info: NumeroProcessoInfo):
