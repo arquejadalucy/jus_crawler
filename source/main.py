@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -25,3 +26,7 @@ def main(request: Request):
 def buscar_processo_pelo_form(request: Request, id_processo: str = Form()):
     result = get_processo_info_by_id(id_processo)
     return get_jinja_templates().TemplateResponse('processo.html', {'request': request, 'result': result})
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True)
