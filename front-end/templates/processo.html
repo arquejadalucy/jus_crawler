@@ -2,23 +2,148 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processo</title>
     <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/style-process.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <form class="form-inline" method="get" action="/">
+                    <span class="navbar-text">
+                    <button type="submit" class="btn" style="background: none;" id="titleSearch">
+                        <h3>JUS CRAWLER</h3>
+                    </button>
+                    </span>
+                </form>
+                <form class="form-inline buttonParent" method="get" action="/entrar" id="loginButton">
+                    <img src="static/img/user.png" style="width: 1.5rem;">
+
+                    <button class="btn button-search my-2 my-sm-0" type="submit">
+                        Login
+                    </button>
+                </form>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="container margem margem-total">
     <h3>Informações do processo {{ result.id }}</h3>
     {% for key, value in result.items() %}
         {% if key != "id" %}
-        <h3>{{ key }}</h3>
+        <h3 class="grau">{{ key }}</h3>
         {% if 'ERROR' in result[key] %}
             <p>{{ result[key] }}</p>
         {% else %}
-            {% for field in value %}
-                <p>{{ field }}: {{ value[field] }}</p>
-            {% endfor %}
+              <div class="row">
+                <div class="col">
+                  <p class="campo">Classe: {{ result[key].get("classe") }}<p>
+                </div>
+                <div class="col">
+                  <p class="campo">Data: {{ result[key].get("data") }}<p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p class="campo">Área: {{ result[key].get("area") }}<p>
+                </div>
+                <div class="col">
+                  <p class="campo">Juiz: {{ result[key].get("juiz") }}<p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p class="campo">Assunto: {{ result[key].get("assunto") }}</p>
+                </div>
+                <div class="col">
+                  <p class="campo">Valor: {{ result[key].get("valor") }}</p>
+                </div>
+              </div>
+
+
+            <div id="accordion">
+              <div class="card margem">
+                <div class="card-header" id="headingPartes_{{ key }}">
+                  <h5 class="mb-0">
+                    <button id="btn-campo" class="btn" data-toggle="collapse" data-target="#tabelaPartes_{{ key }}" aria-expanded="true" aria-controls="tabelaPartes_{{ key }}">
+                      Partes
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="tabelaPartes_{{ key }}" class="table-responsive collapse" aria-labelledby="headingPartes_{{ key }}" data-parent="#accordion">
+                  <div class="card-body">
+                      <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Participação</th>
+                      <th scope="col">Advogados</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for parte in result[key].get("partes") %}
+                        <tr>
+
+                          <td>{{ parte.get('nome') }}</td>
+                          <td>{{ parte.get('tipo_de_participacao') }}</td>
+                          <td>{{ parte.get('advogados') }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card margem">
+                <div class="card-header" id="headingMov_{{ key }}">
+                  <h5 class="mb-0">
+                    <button id="btn-campo2" class="btn" data-toggle="collapse" data-target="#tabelaMov_{{ key }}" aria-expanded="true" aria-controls="tabelaMov_{{ key }}">
+                      Movimentações
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="tabelaMov_{{ key }}" class="table-responsive collapse" aria-labelledby="headingMov_{{ key }}" data-parent="#accordion">
+                  <div class="card-body">
+                      <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Data</th>
+                      <th scope="col">Descrição</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for movimentacao in result[key].get("movimentações") %}
+                        <tr>
+                          <td>{{ movimentacao.data }}</td>
+                          <td>{{ movimentacao.descricao }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                  </div>
+                </div>
+              </div>
+
+
         {% endif %}
         {% endif %}
     {% endfor %}
+    </div>
+
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
 

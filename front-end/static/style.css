@@ -1,41 +1,90 @@
-#titleSearch {
-    text-align: center;
-    background: -webkit-linear-gradient(#000000, #00A3FF);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 40px;
+#id_processo {
+    color: #979797;
+    font-size: 1.25rem;
     font-family: Montserrat;
+    font-weight: 400;
+    word-wrap: break-word;
+    width: 35.8rem;
+    height: 3.5;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2.5rem;
+    padding-right: 10rem;
+    left: 0px;
+    top: 0px;
+    background: #F5F5F5;
+    border-radius: 2.5rem;
+    border: 0.313rem white solid;
+    align-items: center;
+    gap: 0.625rem;
+    display: inline-flex;
+}
+
+#loginButton {
+    padding: 0.5 rem 1 rem;
+    border-radius: 1rem;
+    gap: 0.875rem;
+    justify-content: center;
+}
+
+.titulo {
+    color: #000;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 2.5rem;
+    font-style: normal;
     font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.025rem;
     text-transform: uppercase;
-    letter-spacing: 0.40px;
-    word-wrap: break-word
+    padding: 5rem 0 2rem 0;
 }
 
-/* Header styles */
-header {
-    background-color: #e3f2fd;
+.buttonParent {
+    display: inline-flex;
+    height: 3.5;
+    padding: 1rem;
+    align-items: center;
+    gap: 0.625rem;
+    border-radius: 2.5rem;
+    background: rgba(0, 163, 255, 0.20);
+}
+
+.button-search {
+    color: #00A3FF;
+    background: none;
+    font-family: Montserrat;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.013rem;
+    text-transform: uppercase;
+    word-wrap: break-word;
+}
+
+#titleSearch, #foot {
+    width: 100%
     text-align: center;
+    color: rgba(0, 163.20, 255, 0.60);
+    font-size: 2rem;
+    font-family: Montserrat;
+    font-weight: 400;
+    letter-spacing: 0.015rem;
+    word-wrap: break-word;
 }
 
+.input-group {
+    width: 44.75rem;
+    height: 3.5rem;
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-right: auto;
 
-/* Footer styles */
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
 }
 
-
-.responsive{    
-    width: 100%; /* Make the image width 100% of the container */
-    height: auto; /* Automatically adjust the height while maintaining aspect ratio */
-    display: block; /* Remove any extra spacing around the image */
+body {
+    width: 100%;
+    height: 100%;
+    background: white;
 }
-
-@media (max-width: 830px) {
-    .form-inline {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  }

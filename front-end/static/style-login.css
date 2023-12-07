@@ -1,0 +1,55 @@
+/* style-login.css */
+
+
+
+
+.forms-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+
+
+.input-field {
+    max-width: 24rem;
+    width: 100%;
+    background-color: #f0f0f0;
+    margin: 0.625rem 0;
+    height: 4rem;
+    border-radius: 4rem;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+}
+
+.input-field i {
+    text-align: center;
+    line-height: 4rem;
+    color: #acacac;
+}
+
+.input-field input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    color: #333;
+    padding: 0 0.4rem;
+}
+
+.btn-entrar {
+    width: 10rem;
+    background-color: #3498db;
+    border: none;
+    outline: none;
+    height: 3rem;
+    border-radius: 3rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0.625rem 0;
+    cursor: pointer;
+}

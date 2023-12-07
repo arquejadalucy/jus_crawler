@@ -1,3 +1,5 @@
+import logging
+
 import pyrebase
 import firebase_admin
 from fastapi import APIRouter, Form
@@ -75,20 +77,3 @@ async def validate_token(request: Request):
     user = auth.verify_id_token(jwt)
 
     return user['user_id']
-
-
-def get_jinja_templates():
-    router.mount("/static", StaticFiles(directory="front-end/static"), name="static")
-    return Jinja2Templates(directory="front-end/templates")
-
-
-@router.get('/login', response_class=HTMLResponse, tags=["home"], include_in_schema=False)
-def main(request: Request):
-    return get_jinja_templates().TemplateResponse('home.html', {'request': request})
-
-
-@router.post('/signin', include_in_schema=False)
-def buscar_processo_pelo_form(request: Request, email: str = Form(), password: str = Form()):
-    user = LoginSchema(email=email, password=password)
-    result = create_access_token(user)
-    return get_jinja_templates().TemplateResponse('home.html', {'request': request, 'result': result})
