@@ -20,12 +20,6 @@
     display: inline-flex;
 }
 
-#loginButton {
-    padding: 0.5 rem 1 rem;
-    border-radius: 1rem;
-    gap: 0.875rem;
-    justify-content: center;
-}
 
 .titulo {
     color: #000;

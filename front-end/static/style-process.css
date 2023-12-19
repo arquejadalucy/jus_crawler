@@ -125,9 +125,6 @@ h3 {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    #loginButton {
-        margin-top: 10px;
-    }
 
     .navbar-text {
         margin-right: 0;
