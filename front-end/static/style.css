@@ -57,14 +57,23 @@
     word-wrap: break-word;
 }
 
-#titleSearch, #foot {
-    width: 100%
-    text-align: center;
+header nav div form {
+    display:table;
+    margin:auto;
+    margin-top: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+header nav div form button h3 {
+    font-size: 3.125rem;
+}
+
+#titleSearch {
+    width: 100%;
     color: rgba(0, 163.20, 255, 0.60);
-    font-size: 2rem;
     font-family: Montserrat;
     font-weight: 400;
-    letter-spacing: 0.015rem;
+    letter-spacing: 0.1rem;
     word-wrap: break-word;
 }
 
@@ -74,7 +83,6 @@
     flex-shrink: 0;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 body {

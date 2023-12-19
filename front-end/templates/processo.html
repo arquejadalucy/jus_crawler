@@ -31,7 +31,7 @@
         {% if key != "id" %}
         <h3 class="grau">{{ key }}</h3>
         {% if 'ERROR' in result[key] %}
-            <p>{{ result[key] }}</p>
+            <p>{{ result[key].get('ERROR') }}</p>
         {% else %}
               <div class="row">
                 <div class="col">

@@ -57,6 +57,9 @@ body {
     margin-right: 20px;
 }
 
+header nav div form button h3 {
+    font-size: 3.125rem;
+}
 
 /* Process Information styles */
 h3 {
