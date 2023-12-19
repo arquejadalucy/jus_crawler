@@ -1,0 +1,135 @@
+.grau {
+    color: black;
+    font-size: 28px;
+    font-family: Inter;
+    font-weight: 700;
+    line-height: 33.60px;
+    word-wrap: break-word;
+    margin-top: 2rem;
+}
+
+.campo, #btn-campo, #btn-campo2 {
+    color: var(--text-txt-primary, #000);
+    /* Text/1 regular */
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 28px */
+}
+
+/* Reset some default browser styles */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+/* Header styles */
+.navbar {
+    padding: 15px 0;
+}
+
+.navbar-text {
+    color: #fff;
+    margin-right: 20px;
+}
+
+header nav div form button h3 {
+    font-size: 3.125rem;
+}
+
+/* Process Information styles */
+h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+
+
+.campo {
+    margin-bottom: 10px;
+}
+
+/* Accordion styles */
+#accordion {
+    margin-top: 20px;
+}
+
+.card-header {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.btn-campo,
+.btn-campo2 {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.btn-campo:hover,
+.btn-campo2:hover {
+    background-color: #2980b9;
+}
+
+/* Table styles */
+.table {
+    margin-top: 20px;
+}
+
+.margem {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.table thead {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #ecf0f1;
+}
+
+.margem-total {
+    margin-bottom: 5rem;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+
+    .navbar-text {
+        margin-right: 0;
+    }
+}
