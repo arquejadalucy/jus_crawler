@@ -61,9 +61,8 @@ space push
 | 6.  | source/services/tribunais_mapper.py | Estruturas que concentram todas as informações necessárias dos tribunais suportados (nome, número e domínio do site) |
 | 7.  | source/services/validate.py         | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org)        |
 | 8.  | front-end/                          | Diretório contendo arquivos estáticos e templates HTML                                                               |
-| 9.  | tests/                              | Diretório com os testes do projeto                                                                                   |
-| 10. | README.md                           | Arquivo atual com a documentação do projeto                                                                          |
-| 11. | requirements.txt                    | Lista dos pacotes utilizados no projeto                                                                              |
+| 9.  | README.md                           | Arquivo atual com a documentação do projeto                                                                          |
+| 10. | requirements.txt                    | Lista dos pacotes utilizados no projeto                                                                              |
 
 # Performance
 
