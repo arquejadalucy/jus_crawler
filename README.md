@@ -99,27 +99,3 @@ uvicorn source.main:app --reload
 App will be available in http://127.0.0.1:8000
 
 Swagger API's documentation will be available in http://127.0.0.1:8000/docs
-
-# Tests
-
-## Run tests with coverage analysis
-
-```bash
-coverage run -m pytest tests/test_controller.py
-coverage run -m pytest tests/test_collect_service.py
-```
-
-## See coverage report
-
-```bash
-coverage report
-```
-
-## Generate coverage report html
-
-```bash
-coverage html
-```
-
-Html coverage report page will be available
-in [htmlcov/index.html](http://localhost:63342/jus_crawler/htmlcov/index.html)
