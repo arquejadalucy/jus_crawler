@@ -5,6 +5,6 @@ micros:
     src: ./
     engine: python3.9
     primary: true
-    run: uvicorn app.api:app --reload
+    run: uvicorn source.main:app --reload
     public_routes:
       - "/*"
