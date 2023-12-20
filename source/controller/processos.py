@@ -26,7 +26,8 @@ def valid_process_id(numero_processo: str):
 @router.post("/busca")
 def buscar_processo(process_request: ProcessRequestBody):
     """
-    API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
+    API que busca dados de um processo em todos os graus dos
+    Tribunais de Justiça de Alagoas (TJAL), do Ceará (TJCE) e de São Paulo (TJSP).
 
     O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
 
@@ -61,7 +62,8 @@ def buscar_processo(process_request: ProcessRequestBody):
 @router.get("/{id_processo}")
 def get_processo_info_by_id(id_processo: str):
     """
-    API que busca dados de um processo em todos os graus dos Tribunais de Justiça de Alagoas (TJAL) e do Ceará (TJCE).
+    API que busca dados de um processo em todos os graus dos
+    Tribunais de Justiça de Alagoas (TJAL), do Ceará (TJCE) e de São Paulo (TJSP).
 
     O número do processo deve seguir a estrutura de dígitos NNNNNNN-DD.AAAA.J.TR.OOOO conforme padrão do CNJ.
 
