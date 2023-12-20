@@ -15,7 +15,7 @@ class ProcessNumberRegexErrorHandler(errors.BasicErrorHandler, ABC):
 
 def tribunal_suportado(field, value, error):
     if value not in TRIBUNAIS_VALIDOS:
-        error(field, f"Tribunal não suportado. Tribunais válidos: {[tribunal.name for tribunal in Tribunais]}")
+        error(field, f"ERROR: Tribunal não suportado. Tribunais válidos: {[tribunal.name for tribunal in Tribunais]}")
 
 
 numero_processo_rules = {'type': 'string',

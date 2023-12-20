@@ -30,8 +30,12 @@
     {% for key, value in result.items() %}
         {% if key != "id" %}
         <h3 class="grau">{{ key }}</h3>
-        {% if 'ERROR' in result[key] %}
+        {% if 'ERROR' in result[key][0] or 'ERROR' in result[key] %}
+            {% if result[key] is mapping %}
             <p>{{ result[key].get('ERROR') }}</p>
+            {% else %}
+            <p>{{ result[key] }}</p>
+            {% endif %}
         {% else %}
               <div class="row">
                 <div class="col">
@@ -85,7 +89,7 @@
 
                           <td>{{ parte.get('nome') }}</td>
                           <td>{{ parte.get('tipo_de_participacao') }}</td>
-                          <td>{{ parte.get('advogados') }}</td>
+                          <td>{{ parte.get('advogados') | join(", ") }}</td>
                         </tr>
                     {% endfor %}
                   </tbody>
