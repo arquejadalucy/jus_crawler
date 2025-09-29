@@ -10,3 +10,4 @@ class NumeroProcessoInfo(object):
         self.foro = numero_processo[-1]
         self.numeroDigitoAnoUnificado = infos[0] + "." + infos[1]
         self.tribunal = infos[3]
+        print(NumeroProcessoInfo)

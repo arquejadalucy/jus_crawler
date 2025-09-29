@@ -84,10 +84,13 @@ def get_processo_info_by_id(id_processo: str):
     :return:
     """
     if not valid_process_id(id_processo):
+        print("Invalid id")
         return validator.errors
 
     processo_info = NumeroProcessoInfo(id_processo)
+    print(processo_info)
 
     if not valid_request(processo_info):
+        print("Invalid request")
         return validator.errors
     return search_process_data(processo_info)

@@ -25,6 +25,7 @@ def main(request: Request):
 @app.post('/buscaprocesso', include_in_schema=False)
 def buscar_processo_pelo_form(request: Request, id_processo: str = Form()):
     result = get_processo_info_by_id(id_processo)
+    print(result)
     return get_jinja_templates().TemplateResponse('processo.html', {'request': request, 'result': result})
 
 
