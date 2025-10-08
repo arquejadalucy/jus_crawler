@@ -19,8 +19,6 @@ def busca_primeiro_grau(processo: NumeroProcessoInfo, dominio: str):
            f"&dadosConsulta.valorConsultaNuUnificado={processo.numero_processo}"
            f"&dadosConsulta.valorConsultaNuUnificado=UNIFICADO&dadosConsulta.valorConsulta="
            f"&dadosConsulta.tipoNuProcesso=UNIFICADO")
-    # url = f"https://{dominio}/cpopg/show.do?&processo.foro={processo.foro}" \
-    #       f"&processo.numero={processo.numero_processo}"
     print(url)
 
     html = send_request_and_get_response(url)
