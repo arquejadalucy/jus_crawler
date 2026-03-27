@@ -88,4 +88,16 @@ def search_process_data(process: NumeroProcessoInfo):
     data = busca_primeiro_grau(process, dominio)
     data.update(busca_segundo_grau(process, dominio))
     print(data)
-    return data
+    
+    # Filtrar apenas graus com dados válidos
+    filtered_data = {"id": data.get("id")}
+    for grau, grau_data in data.items():
+        if grau != "id":
+            # Verificar se há dados válidos (não é erro e possui campo classe)
+            if isinstance(grau_data, dict) and not (ERROR in grau_data) and grau_data.get("classe"):
+                filtered_data[grau] = grau_data
+            elif isinstance(grau_data, dict) and ERROR in grau_data:
+                # Se for erro, manter para exibição da mensagem de erro
+                filtered_data[grau] = grau_data
+    
+    return filtered_data
