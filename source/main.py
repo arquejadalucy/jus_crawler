@@ -9,12 +9,12 @@ from source.controller import processos
 
 app = FastAPI()
 app.include_router(processos.router)
+app.mount("/static", StaticFiles(directory="front-end/static"), name="static")
+templates = Jinja2Templates(directory="front-end/templates")
 
 
 def get_jinja_templates():
-    app.mount("/static", StaticFiles(directory="front-end/static"), name="static")
-    app.mount("/templates", StaticFiles(directory="front-end/templates"), name="templates")
-    return Jinja2Templates(directory="front-end/templates")
+    return templates
 
 
 @app.get('/', response_class=HTMLResponse, tags=["home"], include_in_schema=False)
