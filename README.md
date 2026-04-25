@@ -37,20 +37,45 @@ Exemplos de números de processos podem ser encontrados nos diários oficiais
 * Diário de justiça do estado do Ceará: [jusbrasil.com.br/diarios/DJCE/](https://www.jusbrasil.com.br/diarios/DJCE/)
 * Diário de justiça do estado de São Paulo: [jusbrasil.com.br/diarios/DJSP/](https://www.jusbrasil.com.br/diarios/DJSP/)
 
-# Accesso à aplicação
+# Acesso à aplicação
 
-Foi feito deploy da aplicação em nuvem com Deta Space. 
+Atualmente o deploy é realizado no **Google Cloud Run**.
 
-> ⚠️ **Nota:** Os URLs de deployment abaixo podem estar desatualizados. Verifique o status atual antes de usar.
+Após o deploy, o endereço público da aplicação pode ser obtido com:
 
-**Estava disponível em: https://jus_crawler-1-e8456548.deta.app**
-
-**Documentação da API (quando disponível): https://jus_crawler-1-e8456548.deta.app/docs**
-
-## Como efetuar o deploy
+```bash
+gcloud run services describe jus-crawler --region southamerica-east1 --format='value(status.url)'
 ```
-space push
+
+Com a URL retornada, os acessos principais são:
+
+* Aplicação: `https://<URL_DO_SERVICO>`
+* Documentação Swagger: `https://<URL_DO_SERVICO>/docs`
+
+## Como efetuar o deploy (Google Cloud Run)
+
+Pré-requisitos:
+
+* Projeto criado no Google Cloud
+* APIs habilitadas:
+    * Cloud Run Admin API
+    * Artifact Registry API
+    * Cloud Build API
+* Código-fonte disponível no diretório do projeto
+
+Passo a passo:
+
+```bash
+gcloud auth login
+gcloud config set project SEU_PROJECT_ID
+gcloud services enable run.googleapis.com artifactregistry.googleapis.com cloudbuild.googleapis.com
+gcloud run deploy jus-crawler --source . --region southamerica-east1 --allow-unauthenticated --port 8080 --timeout 300 --memory 512Mi --min-instances 0 --max-instances 1
 ```
+
+Observações:
+
+* Não é necessário criar credenciais manualmente para esse fluxo inicial de deploy.
+* Se o `gcloud` não estiver instalado localmente, use o **Cloud Shell** no console do Google Cloud.
 # Organização do código
 
 | №   | Path                                | Description                                                                                                          |
@@ -94,7 +119,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-> **Nota:** A versão recomendada localmente é Python 3.11.3. Para deployment em produção (Deta Space), a versão utilizada é Python 3.9 conforme definido em `Spacefile`.
+> **Nota:** A versão recomendada localmente é Python 3.11.3. Em produção (Cloud Run), o runtime está definido no `Dockerfile`.
 
 ## Start the service:
 
