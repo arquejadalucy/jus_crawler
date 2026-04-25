@@ -1,4 +1,5 @@
 import uvicorn
+from pathlib import Path
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -7,10 +8,14 @@ from fastapi.templating import Jinja2Templates
 from source.controller.processos import get_processo_info_by_id
 from source.controller import processos
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_DIR = BASE_DIR / "front-end" / "static"
+TEMPLATES_DIR = BASE_DIR / "front-end" / "templates"
+
 app = FastAPI()
 app.include_router(processos.router)
-app.mount("/static", StaticFiles(directory="front-end/static"), name="static")
-templates = Jinja2Templates(directory="front-end/templates")
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 
 
 def get_jinja_templates():
