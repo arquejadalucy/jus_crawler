@@ -17,7 +17,7 @@ Endereços utilizados para as consultas de processos:
     * 2º grau - https://esaj.tjce.jus.br/cposg5/open.do
  * TJSP
    * 1º grau - https://esaj.tjsp.jus.br/cpopg/open.do
-   * 2º grau - https://esaj.tjsp.jus.br/cposg/open.do
+   * 2º grau - https://esaj.tjsp.jus.br/cposg5/open.do
 
 Dados coletados:
 
@@ -33,17 +33,19 @@ Dados coletados:
 ---
 Exemplos de números de processos podem ser encontrados nos diários oficiais
 
-* Diário oficial de Alagoas: [jusbrasil.com.br/diarios/DJAL/](https://www.jusbrasil.com.br/diarios/DJSP/)
-* Diário de justiça do estado do Ceará: [jusbrasil.com.br/diarios/DJCE/](https://www.jusbrasil.com.br/diarios/DJSP/)
+* Diário oficial de Alagoas: [jusbrasil.com.br/diarios/DJAL/](https://www.jusbrasil.com.br/diarios/DJAL/)
+* Diário de justiça do estado do Ceará: [jusbrasil.com.br/diarios/DJCE/](https://www.jusbrasil.com.br/diarios/DJCE/)
 * Diário de justiça do estado de São Paulo: [jusbrasil.com.br/diarios/DJSP/](https://www.jusbrasil.com.br/diarios/DJSP/)
 
 # Accesso à aplicação
 
 Foi feito deploy da aplicação em nuvem com Deta Space. 
 
-**Está disponível em: https://jus_crawler-1-e8456548.deta.app**
+> ⚠️ **Nota:** Os URLs de deployment abaixo podem estar desatualizados. Verifique o status atual antes de usar.
 
-**A documentação da API pode ser acessada em: https://jus_crawler-1-e8456548.deta.app/docs**
+**Estava disponível em: https://jus_crawler-1-e8456548.deta.app**
+
+**Documentação da API (quando disponível): https://jus_crawler-1-e8456548.deta.app/docs**
 
 ## Como efetuar o deploy
 ```
@@ -81,6 +83,8 @@ Portanto, atualmente é possível utilizar o processamento assíncrono apenas pa
 # How to run locally
 
 ### Using [pyenv](https://github.com/pyenv/pyenv-installer)
+
+**Ambiente local:**
 ```bash
 pyenv install 3.11.3
 pyenv virtualenv 3.11.3 env-jus_crawler
@@ -89,6 +93,8 @@ pyenv local env-jus_crawler # opcional
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+> **Nota:** A versão recomendada localmente é Python 3.11.3. Para deployment em produção (Deta Space), a versão utilizada é Python 3.9 conforme definido em `Spacefile`.
 
 ## Start the service:
 
