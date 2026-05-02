@@ -89,7 +89,8 @@ Observações:
 | 7.  | source/services/validate.py         | Schemas contendo as regras para validação dos dados de input com [Cerberus](https://docs.python-cerberus.org)        |
 | 8.  | front-end/                          | Diretório contendo arquivos estáticos e templates HTML                                                               |
 | 9.  | README.md                           | Arquivo atual com a documentação do projeto                                                                          |
-| 10. | requirements.txt                    | Lista dos pacotes utilizados no projeto                                                                              |
+| 10. | tests/                              | Testes automatizados com pytest para parsing, validação e orquestração do fluxo                                      |
+| 11. | requirements.txt                    | Lista dos pacotes utilizados no projeto                                                                              |
 
 # Performance
 
@@ -130,3 +131,15 @@ uvicorn source.main:app --reload
 App will be available in http://127.0.0.1:8000
 
 Swagger API's documentation will be available in http://127.0.0.1:8000/docs
+
+## Automated tests
+
+The project includes automated tests based on `pytest`, covering parsing helpers, input validation and the orchestration layer that consolidates search results.
+
+To run the suite locally:
+
+```bash
+pytest -q
+```
+
+The tests use local HTML fixtures under `tests/` and do not depend on live requests to the tribunal portals.

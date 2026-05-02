@@ -20,7 +20,7 @@ def tribunal_suportado(field, value, error):
 
 numero_processo_rules = {'type': 'string',
                          'required': True,
-                         'regex': "\d\d\d\d\d\d\d-\d\d\.\d\d\d\d\.\d\.\d\d\.\d\d\d\d"}
+                         'regex': r"\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}"}
 
 id_processo_schema = {'numero_processo': numero_processo_rules}
 

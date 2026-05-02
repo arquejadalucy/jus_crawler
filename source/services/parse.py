@@ -88,8 +88,7 @@ def get_parte_obj(nomes, tipo_de_participacao: str):
 
 def clean_data(data: str):
     if data is not None:
-        data = data.replace("\n", " ").replace("&nbsp", " ").replace("&nbsp;", " ") \
+        data = re.sub(' +', ' ', data.replace("\n", " ").replace("&nbsp", " ").replace("&nbsp;", " ") \
             .replace("\t", " ").replace("\r", "").replace('\"', '"') \
-            .replace("\xa0", "").replace("None", "").strip()
-        re.sub(' +', ' ', data)
+            .replace("\xa0", "").replace("None", "").strip())
     return data

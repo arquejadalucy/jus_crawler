@@ -1,4 +1,5 @@
 import logging
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -9,6 +10,11 @@ from source.services.parse import parse_data_primeiro_grau, \
 from source.services.tribunais_mapper import Tribunais, DominiosPorTribunal
 
 ERROR = "ERROR"
+REQUEST_TIMEOUT_SECONDS = 30
+REQUEST_RETRIES = 3
+REQUEST_RETRY_DELAY_SECONDS = 1
+
+logger = logging.getLogger(__name__)
 
 
 def busca_primeiro_grau(processo: NumeroProcessoInfo, dominio: str):
@@ -19,7 +25,7 @@ def busca_primeiro_grau(processo: NumeroProcessoInfo, dominio: str):
            f"&dadosConsulta.valorConsultaNuUnificado={processo.numero_processo}"
            f"&dadosConsulta.valorConsultaNuUnificado=UNIFICADO&dadosConsulta.valorConsulta="
            f"&dadosConsulta.tipoNuProcesso=UNIFICADO")
-    print(url)
+    logger.debug("Consultando processo de primeiro grau", extra={"url": url, "processo_id": processo.numero_processo})
 
     html = send_request_and_get_response(url)
 
@@ -53,10 +59,10 @@ def busca_segundo_grau(processo: NumeroProcessoInfo, dominio: str):
           f"&foroNumeroUnificado={processo.foro}&dePesquisaNuUnificado={processo.numero_processo}" \
           f"&dePesquisaNuUnificado=UNIFICADO&dePesquisa=&tipoNuProcesso=UNIFICADO"
     codigo = busca_codigo_segundo_grau(url)
-    print("URL BUSCA CODIGO 2 GRAU: " + url)
+    logger.debug("Consultando busca de código do segundo grau", extra={"url": url, "processo_id": processo.numero_processo})
     if codigo:
         url = f"https://{dominio}/cposg5/show.do?processo.codigo={codigo}"
-        print("URL 2 GRAU: " + url)
+        logger.debug("Consultando detalhe do segundo grau", extra={"url": url, "processo_id": processo.numero_processo, "codigo": codigo})
 
     html = send_request_and_get_response(url)
 
@@ -70,24 +76,56 @@ def busca_segundo_grau(processo: NumeroProcessoInfo, dominio: str):
 
 
 def send_request_and_get_response(url):
-    response = requests.get(url)
-    result = BeautifulSoup(response.text, "lxml")
+    last_error = None
 
-    if result.find(id='mensagemRetorno'):
-        error = clean_data(result.find(id='mensagemRetorno').find("li").text)
-        logging.error(error)
-        result = {ERROR: error}
-    return result
+    for attempt in range(1, REQUEST_RETRIES + 1):
+        try:
+            response = requests.get(url, timeout=REQUEST_TIMEOUT_SECONDS)
+
+            if response.status_code >= 500:
+                last_error = f"HTTP {response.status_code}"
+                logger.warning(
+                    "Falha transitória na consulta",
+                    extra={"url": url, "attempt": attempt, "max_attempts": REQUEST_RETRIES, "status_code": response.status_code},
+                )
+                if attempt < REQUEST_RETRIES:
+                    time.sleep(REQUEST_RETRY_DELAY_SECONDS)
+                continue
+
+            result = BeautifulSoup(response.text, "lxml")
+
+            if result.find(id='mensagemRetorno'):
+                error = clean_data(result.find(id='mensagemRetorno').find("li").text)
+                logger.error(error)
+                return {ERROR: error}
+
+            return result
+
+        except requests.RequestException as exc:
+            last_error = str(exc)
+            logger.warning(
+                "Erro ao consultar processo",
+                extra={"url": url, "attempt": attempt, "max_attempts": REQUEST_RETRIES},
+                exc_info=True,
+            )
+            if attempt < REQUEST_RETRIES:
+                time.sleep(REQUEST_RETRY_DELAY_SECONDS)
+
+    logger.error(
+        "Falha ao consultar processo após tentativas",
+        extra={"url": url, "max_attempts": REQUEST_RETRIES, "last_error": last_error},
+    )
+    return {ERROR: last_error or "Falha ao consultar o processo"}
 
 
 def search_process_data(process: NumeroProcessoInfo):
     nome_tribunal = Tribunais(process.tribunal).name
-    print("Nome tribunal:", nome_tribunal)
+    logger.info("Tribunal identificado", extra={"tribunal": nome_tribunal, "processo_id": process.numero_processo})
     dominio = str(DominiosPorTribunal[nome_tribunal].value)
-    print("Dominio:", dominio)
+    logger.info("Domínio selecionado", extra={"dominio": dominio, "processo_id": process.numero_processo})
     data = busca_primeiro_grau(process, dominio)
     data.update(busca_segundo_grau(process, dominio))
-    print(data)
+    logger.debug("Dados brutos coletados", extra={"processo_id": process.numero_processo, "data": data})
     
     # Filtrar apenas graus com dados válidos
     filtered_data = {"id": data.get("id")}
