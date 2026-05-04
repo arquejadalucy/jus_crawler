@@ -1,51 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busca Processo</title>
-    <link href="{{ url_for('static', path='/style.css') }}?v=20260429" rel="stylesheet">
+    <title>JUS CRAWLER - Busca de Processos Jurídicos</title>
+    <link href="{{ url_for('static', path='/style.css') }}?v=20260504" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="home-page">
 
     <header>
-        <nav class="navbar">
+        <nav class="navbar navbar-premium">
             <div class="container">
                 <form class="form-inline text-center" method="get" action="/">
-                    <span class="navbar-text">
-                    <button type="submit" class="btn" style="background: none;" id="titleSearch">
-                        <h3>JUS CRAWLER</h3>
+                    <button type="submit" class="btn btn-link navbar-logo" id="titleSearch">
+                        <h2>⚖️ JUS CRAWLER</h2>
                     </button>
-                    </span>
                 </form>
-
+                <nav class="navbar-menu">
+                    <a href="/" class="nav-link active">Home</a>
+                    <a href="/sobre" class="nav-link">Sobre</a>
+                </nav>
             </div>
         </nav>
     </header>
 
-    <div class="titulo">
-        Busca de processos jurídicos
-    </div>
+    <main class="hero-section">
+        <div class="hero-content">
+            <h1 class="titulo">Busca de Processos Jurídicos</h1>
+            <p class="subtitle">Acesse informações de processos em tempo real com segurança e facilidade</p>
+            
+            <div class="search-container">
+                <form method="post" action="/buscaprocesso" class="search-form">
+                    <div class="input-group-custom">
+                        <input 
+                            id="id_processo" 
+                            type="text" 
+                            name="id_processo" 
+                            class="search-input"
+                            placeholder="Ex: 0000000-00.0000.0.00.0000"
+                            aria-label="Número do processo" 
+                            aria-describedby="button-search"
+                            required
+                        >
+                        <button type="submit" class="btn-search" id="button-search">
+                            <span>🔍 Buscar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-
-
-    <div class="container mt-4">
-        <form class="form-inline" method="post" action="/buscaprocesso">
-            <div class="input-group">
-                <input id="id_processo" type="text" name="id_processo" class="form-control"
-                    placeholder="insira a numeração do processo..." aria-label="Número do processo" aria-describedby="button-search">
-                <div class="input-group-append buttonParent">
-                    <button type="submit" class="btn button-search">Buscar</button>
+            <div class="features">
+                <div class="feature-card">
+                    <span class="feature-icon">📋</span>
+                    <h3>Informações Completas</h3>
+                    <p>Acesso a dados detalhados do processo</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Busca Rápida</h3>
+                    <p>Resultados instantâneos e precisos</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Seguro</h3>
+                    <p>Dados protegidos e confidenciais</p>
                 </div>
             </div>
-        </form>
-    </div>
 
-    <footer class="mt-5">
-        <!-- Adicione o conteúdo do rodapé, se necessário -->
+            <section class="assistant-banner">
+                <div class="assistant-banner-copy">
+                    <span class="assistant-kicker">Assistente Jurídico com IA</span>
+                    <h2>Quer ajuda para interpretar os dados do processo?</h2>
+                    <p>Abra o bot jurídico para tirar dúvidas, pedir um resumo em linguagem simples ou entender melhor os dados exibidos na consulta.</p>
+                </div>
+                <div class="assistant-banner-action">
+                    <a href="https://juridico-bot-amigo.lovable.app/" target="_blank" rel="noopener noreferrer" class="btn-assistant">
+                        Abrir assistente
+                    </a>
+                    <p class="assistant-banner-note">Abre em uma nova aba para manter a consulta do Jus Crawler disponível.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <a class="assistant-fab" href="https://juridico-bot-amigo.lovable.app/" target="_blank" rel="noopener noreferrer" aria-label="Abrir assistente jurídico com IA">
+        <span class="assistant-fab-icon">💬</span>
+        <span class="assistant-fab-text">Assistente jurídico</span>
+    </a>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 JUS CRAWLER. Sistema de Busca de Processos Jurídicos.</p>
+                <p class="footer-subtitle">Desenvolvido para facilitar o acesso à informação judicial</p>
+            </div>
+        </div>
     </footer>
 
     <!-- Include Bootstrap JS and jQuery -->

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - JUS CRAWLER</title>
+    <link href="{{ url_for('static', path='/style.css') }}?v=20260504" rel="stylesheet">
+    <link href="{{ url_for('static', path='/style-about.css') }}?v=20260504" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="about-page">
+    <header>
+        <nav class="navbar navbar-premium">
+            <div class="container">
+                <form class="form-inline" method="get" action="/">
+                    <button type="submit" class="btn btn-link navbar-logo" id="titleSearch">
+                        <h2>⚖️ JUS CRAWLER</h2>
+                    </button>
+                </form>
+                <nav class="navbar-menu">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/sobre" class="nav-link active">Sobre</a>
+                </nav>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-about">
+            <div class="container">
+                <div class="hero-about-content">
+                    <h1>JUS CRAWLER</h1>
+                    <p class="lead">Consulta processual pública para TJSP, TJAL e TJCE</p>
+                    <p class="description">Aplicação web em Python que consulta portais públicos de tribunais, extrai os campos disponíveis e exibe o resultado em uma interface simples.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- O que é Section -->
+        <section class="section-container">
+            <div class="container">
+                <h2 class="section-title">O que a interface faz</h2>
+                
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="content-number">01</div>
+                        <h3>Consulta por número CNJ</h3>
+                        <p>Você informa o número do processo no padrão CNJ e a aplicação consulta os portais públicos suportados para buscar os dados disponíveis.</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <div class="content-number">02</div>
+                        <h3>Exibição dos dados coletados</h3>
+                        <p>Os dados extraídos são organizados em telas com informações básicas, partes e movimentações, quando o portal consultado disponibiliza esses campos.</p>
+                    </div>
+                    
+                    <div class="content-card">
+                        <div class="content-number">03</div>
+                        <h3>Uso responsável</h3>
+                        <p>O projeto trabalha com dados públicos e a documentação discute limites de coleta, proteção de dados e uso ético de scraping em portais judiciais.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problema Section -->
+        <section class="section-container section-alternate">
+            <div class="container">
+                <div class="problem-content">
+                    <h2 class="section-title">Por que essa interface existe</h2>
+                    
+                    <div class="problem-grid">
+                        <div class="problem-item">
+                            <div class="problem-icon">📍</div>
+                            <h4>Heterogeneidade de Portais</h4>
+                            <p>Cada tribunal organiza sua consulta de forma diferente, o que torna a navegação manual mais trabalhosa.</p>
+                        </div>
+                        
+                        <div class="problem-item">
+                            <div class="problem-icon">⏱️</div>
+                            <h4>Acesso Fragmentado</h4>
+                            <p>Quem precisa acompanhar um processo pode ter de consultar mais de um portal e repetir a mesma busca em cada um.</p>
+                        </div>
+                        
+                        <div class="problem-item">
+                            <div class="problem-icon">🔗</div>
+                            <h4>Falta de Padronização</h4>
+                            <p>A apresentação dos campos varia entre tribunais, então a interface padroniza apenas a visualização do que foi extraído.</p>
+                        </div>
+                        
+                        <div class="problem-item">
+                            <div class="problem-icon">🚪</div>
+                            <h4>Barreira de Acesso</h4>
+                            <p>O formulário reduz o esforço de navegação para quem quer consultar um processo pelo número CNJ.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefícios Section -->
+        <section class="section-container">
+            <div class="container">
+                <h2 class="section-title">O que você encontra aqui</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <span class="benefit-icon">⚡</span>
+                        <h3>Busca direta</h3>
+                        <p>Entrada do número CNJ e consulta aos portais públicos suportados pela aplicação.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <span class="benefit-icon">📊</span>
+                        <h3>Dados organizados</h3>
+                        <p>Visualização dos campos coletados em blocos separados por grau de jurisdição.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <span class="benefit-icon">🎯</span>
+                        <h3>Foco no processo</h3>
+                        <p>Exibição de classe, área, assunto, data, juiz, valor, partes e movimentações quando disponíveis.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <span class="benefit-icon">♿</span>
+                        <h3>Interface simples</h3>
+                        <p>Layout direto, pensado para quem quer consultar e interpretar o resultado sem excesso de passos.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <span class="benefit-icon">🔒</span>
+                        <h3>Uso responsável</h3>
+                        <p>Trabalha com dados públicos e deixa claro que a disponibilidade depende do portal de origem.</p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <span class="benefit-icon">📱</span>
+                        <h3>Responsiva</h3>
+                        <p>A interface se adapta a desktop e celular para consulta e leitura do resultado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tribunais Section -->
+        <section class="section-container section-alternate">
+            <div class="container">
+                <h2 class="section-title">Tribunais Suportados</h2>
+                <p class="section-subtitle">O projeto consulta TJSP, TJAL e TJCE, respeitando a estrutura e a disponibilidade de cada portal público</p>
+                
+                <div class="tribunals-grid">
+                    <div class="tribunal-card">
+                        <div class="tribunal-badge">TJSP</div>
+                        <h3>Tribunal de Justiça de São Paulo</h3>
+                        <p class="tribunal-region">Consulta pública por número CNJ</p>
+                        <p class="tribunal-desc">A aplicação consulta os portais de primeiro e segundo graus quando a estrutura do tribunal responde corretamente.</p>
+                        <div class="tribunal-links">
+                            <span class="tribunal-access">1º Grau ✓</span>
+                            <span class="tribunal-access">2º Grau ✓</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tribunal-card">
+                        <div class="tribunal-badge">TJAL</div>
+                        <h3>Tribunal de Justiça de Alagoas</h3>
+                        <p class="tribunal-region">Região Nordeste</p>
+                        <p class="tribunal-desc">A aplicação consulta os portais públicos de primeiro e segundo graus do TJAL.</p>
+                        <div class="tribunal-links">
+                            <span class="tribunal-access">1º Grau ✓</span>
+                            <span class="tribunal-access">2º Grau ✓</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tribunal-card">
+                        <div class="tribunal-badge">TJCE</div>
+                        <h3>Tribunal de Justiça do Ceará</h3>
+                        <p class="tribunal-region">Região Nordeste</p>
+                        <p class="tribunal-desc">A aplicação consulta os portais públicos de primeiro e segundo graus do TJCE.</p>
+                        <div class="tribunal-links">
+                            <span class="tribunal-access">1º Grau ✓</span>
+                            <span class="tribunal-access">2º Grau ✓</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dados Coletados Section -->
+        <section class="section-container">
+            <div class="container">
+                <h2 class="section-title">Informações Disponíveis</h2>
+                <p class="section-subtitle">Os campos abaixo dependem do que o portal de origem disponibiliza na página consultada</p>
+                
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="data-icon">📋</span>
+                        <h4>Dados Básicos</h4>
+                        <ul>
+                            <li>Classe processual</li>
+                            <li>Área do direito</li>
+                            <li>Assunto</li>
+                            <li>Data de distribuição</li>
+                            <li>Valor da ação</li>
+                            <li>Juiz responsável</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="data-item">
+                        <span class="data-icon">👥</span>
+                        <h4>Partes Processuais</h4>
+                        <ul>
+                            <li>Nomes dos envolvidos</li>
+                            <li>Tipo de participação</li>
+                            <li>Advogados informados no portal</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="data-item">
+                        <span class="data-icon">📅</span>
+                        <h4>Movimentações</h4>
+                        <ul>
+                            <li>Data da movimentação</li>
+                            <li>Descrição da movimentação</li>
+                            <li>Histórico exibido no portal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Limitações Section -->
+        <section class="section-container section-alternate ethics-section">
+            <div class="container">
+                <h2 class="section-title">Limitações atuais</h2>
+                
+                <div class="ethics-grid">
+                    <div class="ethics-card">
+                        <div class="ethics-icon">🌐</div>
+                        <h3>Dependência dos portais</h3>
+                        <p>Se o portal do tribunal estiver lento, instável ou fora do ar, a consulta pode falhar ou demorar mais do que o esperado.</p>
+                    </div>
+                    
+                    <div class="ethics-card">
+                        <div class="ethics-icon">🧩</div>
+                        <h3>Formato variável</h3>
+                        <p>Nem todos os tribunais expõem os mesmos campos com a mesma consistência, então algumas consultas podem retornar menos dados.</p>
+                    </div>
+                    
+                    <div class="ethics-card">
+                        <div class="ethics-icon">⏳</div>
+                        <h3>Tempo de resposta</h3>
+                        <p>A aplicação faz consulta online ao tribunal de origem; por isso, o tempo de resposta depende do portal consultado.</p>
+                    </div>
+                    
+                    <div class="ethics-card">
+                        <div class="ethics-icon">📖</div>
+                        <h3>Escopo do projeto</h3>
+                        <p>O sistema é uma prova de conceito para busca e leitura de dados processuais, não um repositório oficial nem uma API judicial universal.</p>
+                    </div>
+                </div>
+                
+                <div class="ethics-note">
+                    <p><strong>Observação:</strong> o Jus Crawler exibe apenas o que conseguir extrair dos portais públicos suportados. Quando a consulta falhar, a interface mostra a mensagem de erro retornada ou uma indicação de indisponibilidade.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Público-Alvo Section -->
+        <section class="section-container">
+            <div class="container">
+                <h2 class="section-title">Para quem a interface foi pensada</h2>
+                
+                <div class="audience-grid">
+                    <div class="audience-card">
+                        <span class="audience-emoji">👨‍⚖️</span>
+                        <h3>Profissionais do Direito</h3>
+                        <p>Advogados, servidores e demais profissionais que precisam localizar um processo e ver seus dados de forma rápida.</p>
+                    </div>
+                    
+                    <div class="audience-card">
+                        <span class="audience-emoji">🎓</span>
+                        <h3>Pesquisadores</h3>
+                        <p>Pesquisadores que querem observar como a consulta pública varia entre tribunais e como os campos são expostos.</p>
+                    </div>
+                    
+                    <div class="audience-card">
+                        <span class="audience-emoji">👤</span>
+                        <h3>Cidadãos</h3>
+                        <p>Qualquer pessoa que precise conferir um andamento processual sem navegar manualmente por várias telas do tribunal.</p>
+                    </div>
+                    
+                    <div class="audience-card">
+                        <span class="audience-emoji">🏢</span>
+                        <h3>Organizações</h3>
+                        <p>Organizações que avaliam a estrutura do projeto como referência para soluções semelhantes em legaltech.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visão Futura Section -->
+        <section class="section-container section-alternate">
+            <div class="container">
+                <h2 class="section-title">Visão Futura</h2>
+                
+                <div class="vision-content">
+                    <p class="vision-text">O projeto pode evoluir, mas estes itens ainda não fazem parte da entrega atual:</p>
+                    
+                    <div class="vision-items">
+                        <div class="vision-item">
+                            <span class="vision-step">01</span>
+                            <h4>Expansão para novos tribunais</h4>
+                            <p>Integração com mais tribunais estaduais e, se validado, outros órgãos judiciais</p>
+                        </div>
+                        
+                        <div class="vision-item">
+                            <span class="vision-step">02</span>
+                            <h4>Inteligência Artificial</h4>
+                            <p>Sumarização automática ou classificação de movimentações, se houver etapa específica para isso</p>
+                        </div>
+                        
+                        <div class="vision-item">
+                            <span class="vision-step">03</span>
+                            <h4>APIs Avançadas</h4>
+                            <p>Exposição de uma API própria para integração com outras ferramentas</p>
+                        </div>
+                        
+                        <div class="vision-item">
+                            <span class="vision-step">04</span>
+                            <h4>Análise de Dados</h4>
+                            <p>Relatórios ou análises agregadas sobre consultas e resultados retornados</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Usar a interface</h2>
+                <p>Digite o número CNJ para consultar os portais públicos suportados e ver os dados disponíveis.</p>
+                <a href="/" class="btn btn-cta">Ir para Busca →</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 JUS CRAWLER. Sistema de Busca de Processos Jurídicos.</p>
+                <p class="footer-subtitle">Consulta processual pública com foco em dados exibidos pelos portais oficiais</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,141 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Processo</title>
-    <link href="{{ url_for('static', path='/style.css') }}?v=20260429" rel="stylesheet">
-    <link href="{{ url_for('static', path='/style-process.css') }}?v=20260429" rel="stylesheet">
+    <title>Processo - JUS CRAWLER</title>
+    <link href="{{ url_for('static', path='/style.css') }}?v=20260504" rel="stylesheet">
+    <link href="{{ url_for('static', path='/style-process.css') }}?v=20260504" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
-<body>
+<body class="process-page">
     <header>
-        <nav class="navbar">
+        <nav class="navbar navbar-premium">
             <div class="container">
                 <form class="form-inline" method="get" action="/">
-                    <span class="navbar-text">
-                    <button type="submit" class="btn" style="background: none;" id="titleSearch">
-                        <h3>JUS CRAWLER</h3>
+                    <button type="submit" class="btn btn-link navbar-logo" id="titleSearch">
+                        <h2>⚖️ JUS CRAWLER</h2>
                     </button>
-                    </span>
                 </form>
-
+                <nav class="navbar-menu">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/sobre" class="nav-link">Sobre</a>
+                </nav>
             </div>
         </nav>
     </header>
 
-    <div class="container margem margem-total">
-    <h3>Informações do processo {{ result.id }}</h3>
-    {% for key, value in result.items() %}
-        {% if key != "id" %}
-        <h3 class="grau">{{ key }}</h3>
-        {% if 'ERROR' in result[key] %}
-            {% if result[key] is mapping %}
-            <p>{{ result[key].get('ERROR') }}</p>
-            {% else %}
-            <p>{{ result[key] }}</p>
-            {% endif %}
-        {% else %}
-              <div class="row">
-                <div class="col">
-                  <p class="campo">Classe: {{ result[key].get("classe") }}<p>
-                </div>
-                <div class="col">
-                  <p class="campo">Data: {{ result[key].get("data") }}<p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <p class="campo">Área: {{ result[key].get("area") }}<p>
-                </div>
-                <div class="col">
-                  <p class="campo">Juiz: {{ result[key].get("juiz") }}<p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <p class="campo">Assunto: {{ result[key].get("assunto") }}</p>
-                </div>
-                <div class="col">
-                  <p class="campo">Valor: {{ result[key].get("valor") }}</p>
-                </div>
-              </div>
+    <main class="container process-container">
+        <div class="process-header">
+            <h1>Informações do Processo <span class="process-id">{{ result.id }}</span></h1>
+        </div>
 
-
-            <div id="accordion">
-              <div class="card margem">
-                <div class="card-header" id="headingPartes_{{ key }}">
-                  <h5 class="mb-0">
-                    <button id="btn-campo" class="btn" data-toggle="collapse" data-target="#tabelaPartes_{{ key }}" aria-expanded="true" aria-controls="tabelaPartes_{{ key }}">
-                      Partes
-                    </button>
-                  </h5>
-                </div>
-
-                <div id="tabelaPartes_{{ key }}" class="table-responsive collapse" aria-labelledby="headingPartes_{{ key }}" data-parent="#accordion">
-                  <div class="card-body">
-                      <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Nome</th>
-                      <th scope="col">Participação</th>
-                      <th scope="col">Advogados</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for parte in result[key].get("partes") %}
-                        <tr>
-
-                          <td>{{ parte.get('nome') }}</td>
-                          <td>{{ parte.get('tipo_de_participacao') }}</td>
-                          <td>{{ parte.get('advogados') | join(", ") }}</td>
-                        </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                  </div>
-                </div>
-              </div>
+        <section class="assistant-panel">
+            <div class="assistant-panel-copy">
+                <span class="assistant-kicker">Assistente Jurídico com IA</span>
+                <h2>Precisa de ajuda para interpretar este processo?</h2>
+                <p>Use o assistente para pedir um resumo, esclarecer termos jurídicos ou revisar as movimentações que aparecem nesta página.</p>
             </div>
+            <div class="assistant-panel-action">
+                <a href="https://juridico-bot-amigo.lovable.app/" target="_blank" rel="noopener noreferrer" class="btn-assistant">
+                    Abrir assistente
+                </a>
+                <p class="assistant-banner-note">O bot abre em uma nova aba para você manter esta consulta aberta.</p>
+            </div>
+        </section>
+        
+        {% for key, value in result.items() %}
+            {% if key != "id" %}
+            <div class="degree-section">
+                <h2 class="grau-title">{{ key }}</h2>
+                
+                {% if result[key] is mapping and 'ERROR' in result[key] %}
+                    <div class="alert alert-danger" role="alert">
+                        {% if result[key] is mapping %}
+                            {{ result[key].get('ERROR') }}
+                        {% else %}
+                            {{ result[key] }}
+                        {% endif %}
+                    </div>
+                {% elif result[key] is not mapping %}
+                    <div class="alert alert-warning" role="alert">
+                        {{ result[key] }}
+                    </div>
+                {% else %}
+                    <div class="process-details">
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Classe:</span>
+                                <span class="detail-value">{{ result[key].get("classe") }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Data:</span>
+                                <span class="detail-value">{{ result[key].get("data") }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Área:</span>
+                                <span class="detail-value">{{ result[key].get("area") }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Juiz:</span>
+                                <span class="detail-value">{{ result[key].get("juiz") }}</span>
+                            </div>
+                            <div class="detail-item detail-full">
+                                <span class="detail-label">Assunto:</span>
+                                <span class="detail-value">{{ result[key].get("assunto") }}</span>
+                            </div>
+                            <div class="detail-item detail-full">
+                                <span class="detail-label">Valor:</span>
+                                <span class="detail-value">{{ result[key].get("valor") }}</span>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="card margem">
-                <div class="card-header" id="headingMov_{{ key }}">
-                  <h5 class="mb-0">
-                    <button id="btn-campo2" class="btn" data-toggle="collapse" data-target="#tabelaMov_{{ key }}" aria-expanded="true" aria-controls="tabelaMov_{{ key }}">
-                      Movimentações
-                    </button>
-                  </h5>
-                </div>
+                    <!-- Partes Accordion -->
+                    <div class="accordion-section">
+                        <div class="card process-card">
+                            <div class="card-header accordion-header" id="headingPartes_{{ key }}">
+                                <button class="btn btn-accordion" data-toggle="collapse" data-target="#tabelaPartes_{{ key }}" aria-expanded="true" aria-controls="tabelaPartes_{{ key }}">
+                                    <span class="accordion-icon">👥</span>
+                                    <span class="accordion-title">Partes</span>
+                                    <span class="accordion-arrow">›</span>
+                                </button>
+                            </div>
 
-                <div id="tabelaMov_{{ key }}" class="table-responsive collapse" aria-labelledby="headingMov_{{ key }}" data-parent="#accordion">
-                  <div class="card-body">
-                      <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">Data</th>
-                      <th scope="col">Descrição</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for movimentacao in result[key].get("movimentações") %}
-                        <tr>
-                          <td>{{ movimentacao.data }}</td>
-                          <td>{{ movimentacao.descricao }}</td>
-                        </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                  </div>
-                </div>
-              </div>
+                            <div id="tabelaPartes_{{ key }}" class="collapse" aria-labelledby="headingPartes_{{ key }}">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Participação</th>
+                                                    <th>Advogados</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for parte in result[key].get("partes") %}
+                                                    <tr>
+                                                        <td><strong>{{ parte.get('nome') }}</strong></td>
+                                                        <td><span class="badge badge-info">{{ parte.get('tipo_de_participacao') }}</span></td>
+                                                        <td>{{ parte.get('advogados') | join(", ") }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Movimentações Accordion -->
+                    <div class="accordion-section">
+                        <div class="card process-card">
+                            <div class="card-header accordion-header" id="headingMov_{{ key }}">
+                                <button class="btn btn-accordion" data-toggle="collapse" data-target="#tabelaMov_{{ key }}" aria-expanded="true" aria-controls="tabelaMov_{{ key }}">
+                                    <span class="accordion-icon">📅</span>
+                                    <span class="accordion-title">Movimentações</span>
+                                    <span class="accordion-arrow">›</span>
+                                </button>
+                            </div>
 
-        {% endif %}
-        {% endif %}
-    {% endfor %}
-    </div>
+                            <div id="tabelaMov_{{ key }}" class="collapse" aria-labelledby="headingMov_{{ key }}">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Data</th>
+                                                    <th>Descrição</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for movimentacao in result[key].get("movimentações") %}
+                                                    <tr>
+                                                        <td><strong>{{ movimentacao.data }}</strong></td>
+                                                        <td>{{ movimentacao.descricao }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+    </main>
 
+    <a class="assistant-fab" href="https://juridico-bot-amigo.lovable.app/" target="_blank" rel="noopener noreferrer" aria-label="Abrir assistente jurídico com IA">
+        <span class="assistant-fab-icon">💬</span>
+        <span class="assistant-fab-text">Assistente jurídico</span>
+    </a>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 JUS CRAWLER. Sistema de Busca de Processos Jurídicos.</p>
+                <p class="footer-subtitle">Desenvolvido para facilitar o acesso à informação judicial</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Include Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -143,4 +191,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
-

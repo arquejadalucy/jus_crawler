@@ -101,12 +101,20 @@ def send_request_and_get_response(url):
 
             return result
 
+        except requests.Timeout:
+            last_error = "Tempo limite excedido ao consultar o portal judicial"
+            logger.warning(
+                "Tempo limite excedido ao consultar processo",
+                extra={"url": url, "attempt": attempt, "max_attempts": REQUEST_RETRIES},
+            )
+            if attempt < REQUEST_RETRIES:
+                time.sleep(REQUEST_RETRY_DELAY_SECONDS)
+
         except requests.RequestException as exc:
             last_error = str(exc)
             logger.warning(
                 "Erro ao consultar processo",
                 extra={"url": url, "attempt": attempt, "max_attempts": REQUEST_RETRIES},
-                exc_info=True,
             )
             if attempt < REQUEST_RETRIES:
                 time.sleep(REQUEST_RETRY_DELAY_SECONDS)

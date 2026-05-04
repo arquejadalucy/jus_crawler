@@ -134,12 +134,45 @@ Swagger API's documentation will be available in http://127.0.0.1:8000/docs
 
 ## Automated tests
 
-The project includes automated tests based on `pytest`, covering parsing helpers, input validation and the orchestration layer that consolidates search results.
+The project includes automated tests based on `pytest`, covering:
+- Parsing helpers
+- Input validation 
+- Orchestration layer that consolidates search results
+- **Front-end template rendering with multiple scenarios**
 
-To run the suite locally:
+To run all tests locally:
 
 ```bash
 pytest -q
 ```
 
-The tests use local HTML fixtures under `tests/` and do not depend on live requests to the tribunal portals.
+### Front-end specific tests
+
+20 automated tests validate template rendering with mocked process data:
+
+```bash
+# Run frontend template tests
+pytest tests/test_frontend_templates.py -v
+
+# Run specific test category
+pytest tests/test_frontend_templates.py::TestHomePageRoute -v
+
+# Run with coverage report
+pytest tests/test_frontend_templates.py --cov=source.main
+```
+
+**Test scenarios covered:**
+- ✅ Home and About pages render correctly
+- ✅ Valid process data (1º and 2º grau) display properly
+- ✅ Error handling (timeout, invalid CNJ, missing data)
+- ✅ Data normalization before template rendering
+- ✅ HTML structure and accessibility
+- ✅ Assistant AI panel and floating button
+
+**Status:** 15/20 tests passing (75%)
+
+For detailed testing documentation, see [FRONTEND_TESTING.md](docs/FRONTEND_TESTING.md)
+
+---
+
+All tests use local HTML fixtures under `tests/` and do not depend on live requests to the tribunal portals.

@@ -1,0 +1,725 @@
+/* ===========================
+   About Page Specific Styles
+   =========================== */
+
+/* Navigation Menu */
+.navbar-menu {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--transition);
+    opacity: 0.9;
+}
+
+.nav-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.nav-link.active {
+    font-weight: 700;
+    opacity: 1;
+    border-bottom: 2px solid var(--white);
+    padding-bottom: 0.25rem;
+}
+
+/* Hero About Section */
+.hero-about {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: 6rem 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-about::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 60%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.hero-about-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-about h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.hero-about .lead {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    opacity: 0.95;
+    font-weight: 300;
+}
+
+.hero-about .description {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    line-height: 1.6;
+}
+
+/* Section Container */
+.section-container {
+    padding: 4rem 1rem;
+}
+
+.section-alternate {
+    background: linear-gradient(to bottom, var(--light-bg), var(--white));
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--text-primary);
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.content-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    position: relative;
+    border-top: 4px solid var(--primary-color);
+}
+
+.content-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.content-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    opacity: 0.3;
+}
+
+.content-card h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.content-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Problem Section */
+.problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.problem-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border-left: 4px solid var(--accent-color);
+}
+
+.problem-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(4px);
+}
+
+.problem-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.problem-item h4 {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.problem-item p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Benefits Grid */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.benefit-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    text-align: center;
+    border-bottom: 4px solid var(--secondary-color);
+}
+
+.benefit-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-lg);
+    border-bottom-color: var(--primary-color);
+}
+
+.benefit-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.benefit-card h3 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+.benefit-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Tribunals Section */
+.tribunals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.tribunal-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    position: relative;
+    border-left: 6px solid var(--primary-color);
+}
+
+.tribunal-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-left-color: var(--secondary-color);
+}
+
+.tribunal-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.tribunal-card h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.tribunal-region {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.tribunal-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.tribunal-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.tribunal-access {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* Data Grid */
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.data-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    border-top: 4px solid var(--secondary-color);
+}
+
+.data-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.data-item h4 {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.data-item ul {
+    list-style: none;
+    padding: 0;
+}
+
+.data-item li {
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.data-item li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success-color);
+    font-weight: 700;
+}
+
+/* Ethics Section */
+.ethics-section .section-container {
+    padding: 4rem 1rem;
+}
+
+.ethics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.ethics-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-color);
+}
+
+.ethics-card:hover {
+    transform: translateX(8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.ethics-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.ethics-card h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.ethics-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.ethics-note {
+    background: linear-gradient(135deg, var(--primary-light), rgba(0, 163, 255, 0.08));
+    border-left: 4px solid var(--primary-color);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.ethics-note p {
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Audience Grid */
+.audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+}
+
+.audience-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    text-align: center;
+    border-top: 4px solid var(--secondary-color);
+}
+
+.audience-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-top-color: var(--primary-color);
+}
+
+.audience-emoji {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.audience-card h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.audience-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Vision Section */
+.vision-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.vision-text {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.vision-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.vision-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    position: relative;
+    border-left: 4px solid var(--primary-color);
+}
+
+.vision-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.vision-step {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-bottom: 0.75rem;
+}
+
+.vision-item h4 {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.vision-item p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: 4rem 1rem;
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.btn-cta {
+    background: var(--white);
+    color: var(--primary-color);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: var(--transition);
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    color: var(--primary-color);
+}
+
+.btn-cta:active {
+    transform: translateY(0);
+}
+
+/* ===========================
+   Responsive Design
+   =========================== */
+
+@media (max-width: 768px) {
+    .navbar-menu {
+        gap: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .hero-about {
+        padding: 4rem 1rem;
+    }
+
+    .hero-about h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-about .lead {
+        font-size: 1.3rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .content-grid,
+    .problem-grid,
+    .benefits-grid,
+    .tribunals-grid,
+    .data-grid,
+    .ethics-grid,
+    .audience-grid,
+    .vision-items {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .content-card,
+    .problem-item,
+    .benefit-card,
+    .tribunal-card,
+    .data-item,
+    .ethics-card,
+    .audience-card {
+        padding: 1.5rem;
+    }
+
+    .content-number {
+        font-size: 2rem;
+    }
+
+    .problem-icon,
+    .benefit-icon,
+    .data-icon,
+    .ethics-icon,
+    .audience-emoji {
+        font-size: 2rem;
+    }
+
+    .tribunal-badge {
+        font-size: 0.7rem;
+    }
+
+    .tribunal-links {
+        flex-direction: column;
+    }
+
+    .tribunal-access {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+    }
+
+    .cta-section p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-menu {
+        display: none;
+    }
+
+    .hero-about {
+        padding: 2.5rem 1rem;
+    }
+
+    .hero-about h1 {
+        font-size: 1.75rem;
+    }
+
+    .hero-about .lead {
+        font-size: 1.1rem;
+    }
+
+    .hero-about .description {
+        font-size: 0.95rem;
+    }
+
+    .section-container {
+        padding: 2.5rem 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .content-card,
+    .problem-item,
+    .benefit-card,
+    .tribunal-card,
+    .data-item,
+    .ethics-card,
+    .audience-card,
+    .vision-item {
+        padding: 1.25rem;
+    }
+
+    .problem-icon,
+    .benefit-icon,
+    .ethics-icon,
+    .audience-emoji {
+        font-size: 1.75rem;
+    }
+
+    .content-number {
+        font-size: 1.5rem;
+    }
+
+    .data-item li {
+        font-size: 0.85rem;
+        padding: 0.4rem 0;
+    }
+
+    .vision-step {
+        font-size: 1.5rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-cta {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .ethics-note p,
+    .vision-text {
+        font-size: 0.9rem;
+    }
+}
