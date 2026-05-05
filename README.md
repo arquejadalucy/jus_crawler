@@ -176,3 +176,39 @@ For detailed testing documentation, see [FRONTEND_TESTING.md](docs/FRONTEND_TEST
 ---
 
 All tests use local HTML fixtures under `tests/` and do not depend on live requests to the tribunal portals.
+
+---
+**SQLite notes**
+
+- This project stores subscriptions in a local SQLite database file at `data/subscriptions.db` when running with the SQLite backend.
+- On Linux (Ubuntu/Debian) you must have the SQLite development headers installed before building Python so that the `_sqlite3` module is available to Python. Install system deps:
+
+```bash
+sudo apt update
+sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
+    libreadline-dev libncurses5-dev libffi-dev liblzma-dev tk-dev libsqlite3-dev pkg-config
+```
+
+- After installing system packages, (re)install Python via `pyenv` and recreate the virtualenv (example from project):
+
+```bash
+pyenv uninstall -f 3.11.3 || true
+pyenv install 3.11.3
+pyenv virtualenv 3.11.3 env-jus_crawler
+pyenv activate env-jus_crawler
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+- Verify sqlite support in Python:
+
+```bash
+python -c "import sqlite3; print('sqlite version:', sqlite3.sqlite_version)"
+```
+
+- If you don't want to recompile Python, the project falls back to a JSON-based storage file `data/subscriptions.json` (legacy). The app will migrate JSON data to the SQLite DB automatically when SQLite is available.
+
+**Docker notes**
+
+- The project's Dockerfile has been adjusted to install system packages required for building and running with SQLite. If you build the image locally you will get the proper SQLite runtime support.
+

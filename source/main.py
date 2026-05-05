@@ -66,13 +66,13 @@ def buscar_processo_pelo_form(request: Request, id_processo: str = Form()):
 
 
 @app.post('/subscribe', include_in_schema=False)
-def subscribe(request: Request, id_processo: str = Form(), contato: str = Form(...), tipo_contato: str = Form(...)):
+def subscribe(request: Request, id_processo: str = Form(), contato: str = Form(...)):
     """Handle subscription from processo page form and render the processo page with a message."""
-    success, msg = add_subscription(id_processo, contato, tipo_contato)
+    success, msg = add_subscription(id_processo, contato, 'email')
 
     # Send confirmation email if subscription was successful
     if success:
-        email_sent = send_subscription_confirmation(contato, id_processo, tipo_contato)
+        email_sent = send_subscription_confirmation(contato, id_processo, 'email')
         if not email_sent:
             msg = "Inscrição realizada, mas houve falha no envio do email de confirmação."
 
