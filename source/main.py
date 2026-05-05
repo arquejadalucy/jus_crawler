@@ -24,9 +24,14 @@ def get_jinja_templates():
 
 def normalize_process_result_for_template(id_processo: str, result):
     if not isinstance(result, dict):
-        return {"id": id_processo, "Resultado": {"ERROR": "Erro ao consultar processo"}}
+        return {"id": id_processo, "ERROR": "Erro ao consultar processo"}
 
     if "id" in result:
+        # If result has nested "Resultado" structure, flatten it
+        if "Resultado" in result and isinstance(result["Resultado"], dict):
+            normalized = {"id": result.get("id", id_processo)}
+            normalized.update(result["Resultado"])
+            return normalized
         return result
 
     error_message = "Erro ao consultar processo"
@@ -38,7 +43,7 @@ def normalize_process_result_for_template(id_processo: str, result):
             error_message = value
             break
 
-    return {"id": id_processo, "Validação": {"ERROR": error_message}}
+    return {"id": id_processo, "ERROR": error_message}
 
 
 @app.get('/', response_class=HTMLResponse, tags=["home"], include_in_schema=False)

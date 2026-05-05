@@ -47,7 +47,7 @@ class TestAboutPageRoute:
 class TestProcessoPageWithValidData:
     """Testes da página de processo com dados válidos (1º grau)."""
     
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_processo_page_renders_valid_first_grau_data(self, mock_get_info):
         """Testa renderização com dados válidos de 1º grau."""
         # Mock de resposta válida
@@ -87,7 +87,7 @@ class TestProcessoPageWithValidData:
         assert "João Silva" in response.text
         assert "Petição inicial" in response.text
         
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_processo_page_shows_both_graus_when_available(self, mock_get_info):
         """Testa página quando ambas instâncias têm dados."""
         mock_get_info.return_value = {
@@ -131,7 +131,7 @@ class TestProcessoPageWithValidData:
 class TestProcessoPageWithErrors:
     """Testes da página de processo em cenários de erro."""
     
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_processo_page_handles_timeout_gracefully(self, mock_get_info):
         """Testa renderização quando há timeout."""
         mock_get_info.return_value = {
@@ -161,7 +161,7 @@ class TestProcessoPageWithErrors:
         # Deve renderizar erro de validação
         assert ("Validação" in response.text or "alert" in response.text)
         
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_processo_page_handles_partial_data(self, mock_get_info):
         """Testa renderização com dados parciais de um grau apenas."""
         mock_get_info.return_value = {
@@ -201,7 +201,10 @@ class TestNormalizeProcessResult:
         
         normalized = normalize_process_result_for_template("1234567-89.1234.5.67.8900", result)
         
-        assert normalized == result
+        # Nova estrutura desaninhada: flatten do Resultado
+        assert normalized["id"] == "1234567-89.1234.5.67.8900"
+        assert normalized["classe"] == "Ação"
+        assert "Resultado" not in normalized
         
     def test_normalize_non_dict_result(self):
         """Testa normalização quando resultado não é dict."""
@@ -210,7 +213,7 @@ class TestNormalizeProcessResult:
             None
         )
         
-        assert "Erro" in str(normalized["Resultado"]["ERROR"])
+        assert "Erro" in str(normalized.get("ERROR", ""))
         
     def test_normalize_validator_error_dict(self):
         """Testa normalização com erro de validação."""
@@ -223,8 +226,8 @@ class TestNormalizeProcessResult:
             error_result
         )
         
-        assert "ERROR" in normalized["Validação"]
-        assert "Formato inválido" in normalized["Validação"]["ERROR"]
+        assert "ERROR" in normalized
+        assert "Formato inválido" in normalized["ERROR"]
         
     def test_normalize_preserves_process_id(self):
         """Testa que a normalização preserva o ID do processo."""
@@ -237,7 +240,7 @@ class TestNormalizeProcessResult:
 class TestProcessoPageStructure:
     """Testes de estrutura e acessibilidade do template de processo."""
     
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_processo_page_has_main_container(self, mock_get_info):
         """Verifica se a página tem estrutura de container principal."""
         mock_get_info.return_value = {
@@ -265,7 +268,7 @@ class TestProcessoPageStructure:
         assert "process-container" in response.text
         assert "Informações do Processo" in response.text
         
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_processo_page_has_assistant_panel(self, mock_get_info):
         """Verifica se a página tem painel do assistente jurídico."""
         mock_get_info.return_value = {
@@ -293,7 +296,7 @@ class TestProcessoPageStructure:
         assert "assistant-panel" in response.text
         assert "juridico-bot-amigo" in response.text
         
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_processo_page_has_floating_assistant_fab(self, mock_get_info):
         """Verifica se há botão flutuante do assistente."""
         mock_get_info.return_value = {
@@ -331,7 +334,7 @@ class TestProcessoPageStructure:
 class TestDataRendering:
     """Testes de renderização correta dos dados no template."""
     
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_all_process_fields_are_displayed(self, mock_get_info):
         """Testa que todos os campos principais do processo são exibidos."""
         mock_get_info.return_value = {
@@ -370,7 +373,7 @@ class TestDataRendering:
         assert "Maria" in response.text
         assert "Dr. João" in response.text
         
-    @patch('source.controller.processos.get_processo_info_by_id')
+    @patch('source.main.get_processo_info_by_id')
     def test_partes_and_movimentacoes_are_in_accordions(self, mock_get_info):
         """Testa que partes e movimentações estão em seções accordion."""
         mock_get_info.return_value = {

@@ -152,10 +152,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for movimentacao in result[key].get("movimentações") %}
+                                                {% for movimentacao in result[key].get("movimentacoes", []) or [] %}
                                                     <tr>
-                                                        <td><strong>{{ movimentacao.data }}</strong></td>
-                                                        <td>{{ movimentacao.descricao }}</td>
+                                                        <td><strong>{{ movimentacao.get("data") }}</strong></td>
+                                                        <td>{{ movimentacao.get("descricao") }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>
