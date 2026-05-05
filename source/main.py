@@ -7,6 +7,8 @@ from fastapi.templating import Jinja2Templates
 
 from source.controller.processos import get_processo_info_by_id
 from source.controller import processos
+from source.services.subscriptions import add_subscription
+from source.services.notifications import send_subscription_confirmation
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "front-end" / "static"
@@ -61,6 +63,27 @@ def buscar_processo_pelo_form(request: Request, id_processo: str = Form()):
     result = get_processo_info_by_id(id_processo)
     normalized_result = normalize_process_result_for_template(id_processo, result)
     return get_jinja_templates().TemplateResponse('processo.html', {'request': request, 'result': normalized_result})
+
+
+@app.post('/subscribe', include_in_schema=False)
+def subscribe(request: Request, id_processo: str = Form(), contato: str = Form(...), tipo_contato: str = Form(...)):
+    """Handle subscription from processo page form and render the processo page with a message."""
+    success, msg = add_subscription(id_processo, contato, tipo_contato)
+
+    # Send confirmation email if subscription was successful
+    if success:
+        email_sent = send_subscription_confirmation(contato, id_processo, tipo_contato)
+        if not email_sent:
+            msg = "Inscrição realizada, mas houve falha no envio do email de confirmação."
+
+    result = get_processo_info_by_id(id_processo)
+    normalized_result = normalize_process_result_for_template(id_processo, result)
+    context = {'request': request, 'result': normalized_result, 'subscribe_message': msg}
+    if success:
+        context['subscribe_success'] = True
+    else:
+        context['subscribe_success'] = False
+    return get_jinja_templates().TemplateResponse('processo.html', context)
 
 
 if __name__ == "__main__":
