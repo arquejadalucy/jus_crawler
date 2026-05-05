@@ -48,7 +48,7 @@ def test_parse_data_primeiro_grau_extracts_core_fields():
     assert parsed["juiz"] == "Juiz da Vara"
     assert parsed["valor"] == "R$ 1.234,56"
     assert parsed["partes"][0]["nome"] == "Autor"
-    assert parsed["movimentações"][0].descricao == "Movimentação com espaços"
+    assert parsed["movimentações"][0]["descricao"] == "Movimentação com espaços"
 
 
 def test_parse_data_segundo_grau_extracts_core_fields():
@@ -63,4 +63,4 @@ def test_parse_data_segundo_grau_extracts_core_fields():
     assert parsed["juiz"] == "Desembargador"
     assert parsed["valor"] == "R$ 9.876,54"
     assert parsed["partes"][0]["nome"] == "Recorrente"
-    assert parsed["movimentações"][0].descricao == "Distribuído ao relator"
+    assert parsed["movimentações"][0]["descricao"] == "Distribuído ao relator"

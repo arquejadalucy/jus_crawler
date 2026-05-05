@@ -57,10 +57,10 @@ def get_movimentos(grau, html):
         descricao_movimento = clean_data(
             movimento.find(class_=tags.get("descricao")).text)
 
-        movimentos_list.append(
-            Movimentacao(data=data_movimento,
-                         descricao=" ".join(descricao_movimento.split()))
-        )
+        mov_obj = Movimentacao(data=data_movimento,
+                              descricao=" ".join(descricao_movimento.split()))
+        # Converter Pydantic model para dict para serialização JSON e template rendering
+        movimentos_list.append(mov_obj.__dict__)
     return movimentos_list
 
 

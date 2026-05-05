@@ -68,7 +68,7 @@ class TestProcessoPageWithValidData:
                             "advogados": ["Dr. Carlos"]
                         }
                     ],
-                    "movimentacoes": [
+                    "movimentações": [
                         {
                             "data": "2024-01-15",
                             "descricao": "Petição inicial"
@@ -101,7 +101,7 @@ class TestProcessoPageWithValidData:
                     "juiz": "Juiz Silva",
                     "valor": "R$ 1.000,00",
                     "partes": [],
-                    "movimentacoes": []
+                    "movimentações": []
                 },
                 "Segunda Instância": {
                     "classe": "Recurso de Apelação",
@@ -111,7 +111,7 @@ class TestProcessoPageWithValidData:
                     "juiz": "Desembargador Costa",
                     "valor": "R$ 1.000,00",
                     "partes": [],
-                    "movimentacoes": []
+                    "movimentações": []
                 }
             }
         }
@@ -175,7 +175,7 @@ class TestProcessoPageWithErrors:
                     "juiz": "Juiz",
                     "valor": "R$ 0,00",
                     "partes": [],
-                    "movimentacoes": []
+                    "movimentações": []
                 }
             }
         }
@@ -254,7 +254,7 @@ class TestProcessoPageStructure:
                     "juiz": "Juiz",
                     "valor": "R$ 1.000,00",
                     "partes": [],
-                    "movimentacoes": []
+                    "movimentações": []
                 }
             }
         }
@@ -282,7 +282,7 @@ class TestProcessoPageStructure:
                     "juiz": "Juiz",
                     "valor": "R$ 1.000,00",
                     "partes": [],
-                    "movimentacoes": []
+                    "movimentações": []
                 }
             }
         }
@@ -310,7 +310,7 @@ class TestProcessoPageStructure:
                     "juiz": "Juiz",
                     "valor": "R$ 1.000,00",
                     "partes": [],
-                    "movimentacoes": []
+                    "movimentações": []
                 }
             }
         }
@@ -354,7 +354,7 @@ class TestDataRendering:
                             "advogados": ["Dr. João"]
                         }
                     ],
-                    "movimentacoes": []
+                    "movimentações": []
                 }
             }
         }
@@ -387,7 +387,7 @@ class TestDataRendering:
                     "juiz": "Juiz",
                     "valor": "R$ 1.000,00",
                     "partes": [{"nome": "Parte 1", "tipo_de_participacao": "Autor", "advogados": []}],
-                    "movimentacoes": [{"data": "2024-01-01", "descricao": "Movimentação 1"}]
+                    "movimentações": [{"data": "2024-01-01", "descricao": "Movimentação 1"}]
                 }
             }
         }
