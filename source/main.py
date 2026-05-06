@@ -11,8 +11,8 @@ from pydantic import BaseModel, Field
 from source.controller.processos import get_processo_info_by_id
 from source.controller import processos
 from source.services.subscriptions import add_subscription
-from source.services.notifications import send_subscription_confirmation
-from source.services.scheduler import set_interval_seconds, check_once
+from source.services.notifications import send_subscription_confirmation, send_update_notification
+from source.services.scheduler import set_interval_seconds
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "front-end" / "static"
@@ -39,10 +39,16 @@ class AdminSchedulerPayload(BaseModel):
 
 
 class AdminManualCheckPayload(BaseModel):
-    cnjs: Optional[list[str]] = Field(
-        default=None,
-        description="Lista opcional de CNJs para filtrar a checagem. Se omitido, todos os inscritos são verificados.",
-        examples=[["0000000-00.0000.0.00.0000", "1234567-89.2024.8.26.0100"]],
+    cnj: str = Field(
+        ...,
+        description="CNJ do processo para o qual a notificação de atualização será enviada.",
+        examples=["0000000-00.0000.0.00.0000"],
+    )
+
+    email: str = Field(
+        ...,
+        description="Se fornecido, envia um email de atualização para este endereço com as movimentações atuais dos CNJs informados.",
+        examples=["usuario@example.com"],
     )
 
 
@@ -96,27 +102,53 @@ async def admin_manual_check(
     payload: AdminManualCheckPayload | None = Body(
         default=None,
         examples={
-            "check-all": {
-                "summary": "Checar todos os inscritos",
-                "value": {},
-            },
-            "check-selected": {
-                "summary": "Checar apenas alguns CNJs",
-                "value": {"cnjs": ["0000000-00.0000.0.00.0000", "1234567-89.2024.8.26.0100"]},
+            "send-update-email": {
+                "summary": "Enviar email de atualização para um CNJ",
+                "value": {"cnj": "0000000-00.0000.0.00.0000", "email": "usuario@example.com"},
             },
         },
     ),
     background = None,
 ):
-    """Trigger a manual check. Optional JSON: {"cnjs": ["123", ...]}"""
-    cnjs = payload.cnjs if payload else None
-    # run check_once in background so endpoint returns quickly
+    """Trigger a manual check. JSON: {"cnj": "123", "email": "user@example.com"}"""
+    cnj = payload.cnj if payload else None
+    email = payload.email if payload else None
+
+    def _send_email_for_cnj(target_cnj, target_email):
+        # Use stored subscription data (no external lookups) to build the demo update email.
+        from source.services.subscriptions import list_subscriptions
+
+        if not target_cnj or not target_email:
+            return
+
+        subs = list_subscriptions()
+        subscription = None
+        for s in subs:
+            if not s.get("ativo"):
+                continue
+            if s.get("cnj") == target_cnj:
+                subscription = s
+                break
+
+        if subscription:
+            mov_data = subscription.get("ultimo_mov_data") or "N/A"
+            mov_desc = subscription.get("ultimo_mov_descricao") or "(sem descrição)"
+        else:
+            mov_data = "N/A"
+            mov_desc = "(sem movimentação registrada)"
+
+        # send (sync) notification — notifications module handles demo vs SMTP
+        send_update_notification(target_email, target_cnj, 'email', {"data": mov_data, "descricao": mov_desc})
+
+    if not cnj or not email:
+        raise HTTPException(status_code=400, detail="Os campos 'cnj' e 'email' são obrigatórios.")
+
     if background is not None:
-        background.add_task(check_once, cnjs)
-        return {"ok": True, "queued": True}
-    else:
-        await check_once(cnjs)
-        return {"ok": True, "queued": False}
+        background.add_task(_send_email_for_cnj, cnj, email)
+        return {"ok": True, "queued": True, "cnj": cnj, "email": email}
+
+    _send_email_for_cnj(cnj, email)
+    return {"ok": True, "queued": False, "cnj": cnj, "email": email}
 
 
 @app.get(

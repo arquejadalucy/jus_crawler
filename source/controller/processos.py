@@ -1,6 +1,7 @@
 from cerberus import Validator
 from fastapi import APIRouter, HTTPException
 import logging
+from time import perf_counter
 from source.services.collect import search_process_data
 from source.models.NumeroProcessoInfo import NumeroProcessoInfo
 from source.models.ProcessoRequestBody import ProcessRequestBody
@@ -75,9 +76,23 @@ def buscar_processo(process_request: ProcessRequestBody):
     :param process_request: User input
     :return:
     """
+    started_at = perf_counter()
     try:
-        return fetch_processo_info(process_request.numero_processo)
+        result = fetch_processo_info(process_request.numero_processo)
+        elapsed_seconds = perf_counter() - started_at
+        logging.getLogger(__name__).info(
+            "Process search API executed in %.4fs for numero_processo=%s",
+            elapsed_seconds,
+            process_request.numero_processo,
+        )
+        return result
     except ValueError as exc:
+        elapsed_seconds = perf_counter() - started_at
+        logging.getLogger(__name__).info(
+            "Process search API failed in %.4fs for numero_processo=%s",
+            elapsed_seconds,
+            process_request.numero_processo,
+        )
         raise HTTPException(status_code=400, detail=exc.args[0])
 
 
@@ -105,8 +120,22 @@ def get_processo_info_by_id(id_processo: str):
     :param process_request: User input
     :return:
     """
+    started_at = perf_counter()
     try:
         logging.getLogger(__name__).debug("Fetching processo info for id %s", id_processo)
-        return fetch_processo_info(id_processo)
+        result = fetch_processo_info(id_processo)
+        elapsed_seconds = perf_counter() - started_at
+        logging.getLogger(__name__).info(
+            "Process search API executed in %.4fs for id_processo=%s",
+            elapsed_seconds,
+            id_processo,
+        )
+        return result
     except ValueError as exc:
+        elapsed_seconds = perf_counter() - started_at
+        logging.getLogger(__name__).info(
+            "Process search API failed in %.4fs for id_processo=%s",
+            elapsed_seconds,
+            id_processo,
+        )
         raise HTTPException(status_code=400, detail=exc.args[0])
