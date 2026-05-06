@@ -2,40 +2,43 @@
 
 API que busca dados de um processo em todos os graus dos Tribunais de Justiça de São Paulo (TJSP), Alagoas (TJAL) e do Ceará (TJCE).
 
-A api recebe o número do processo, que deve seguir
+A API recebe o número do processo, que deve seguir
 o [padrão do Conselho Nacional de Justiça para numeração de processos jurídicos](https://www.cnj.jus.br/programas-e-acoes/numeracao-unica/).
 
 Quando o processamento termina, o usuário é capaz de coletar os dados em formato JSON.
 
-Endereços utilizados para as consultas de processos:
+## Endereços utilizados para as consultas de processos
 
-* TJAL
-    * 1º grau - https://www2.tjal.jus.br/cpopg/open.do
-    * 2º grau - https://www2.tjal.jus.br/cposg5/open.do
-* TJCE
-    * 1º grau - https://esaj.tjce.jus.br/cpopg/open.do
-    * 2º grau - https://esaj.tjce.jus.br/cposg5/open.do
- * TJSP
-   * 1º grau - https://esaj.tjsp.jus.br/cpopg/open.do
-   * 2º grau - https://esaj.tjsp.jus.br/cposg5/open.do
+* **TJAL** (Tribunal de Justiça de Alagoas)
+    * 1º grau: https://www2.tjal.jus.br/cpopg/open.do
+    * 2º grau: https://www2.tjal.jus.br/cposg5/open.do
+* **TJCE** (Tribunal de Justiça do Ceará)
+    * 1º grau: https://esaj.tjce.jus.br/cpopg/open.do
+    * 2º grau: https://esaj.tjce.jus.br/cposg5/open.do
+* **TJSP** (Tribunal de Justiça de São Paulo)
+    * 1º grau: https://esaj.tjsp.jus.br/cpopg/open.do
+    * 2º grau: https://esaj.tjsp.jus.br/cposg5/open.do
 
-Dados coletados:
+## Dados coletados
 
-* classe
-* área
-* assunto
-* data de distribuição
-* juiz
-* valor da ação
-* partes do processo
-* lista das movimentações
+* Classe do processo
+* Área de direito
+* Assunto
+* Data de distribuição
+* Juiz responsável
+* Valor da ação
+* Partes do processo
+* Lista de movimentações
 
 ---
-Exemplos de números de processos podem ser encontrados nos diários oficiais
 
-* Diário oficial de Alagoas: [jusbrasil.com.br/diarios/DJAL/](https://www.jusbrasil.com.br/diarios/DJAL/)
-* Diário de justiça do estado do Ceará: [jusbrasil.com.br/diarios/DJCE/](https://www.jusbrasil.com.br/diarios/DJCE/)
-* Diário de justiça do estado de São Paulo: [jusbrasil.com.br/diarios/DJSP/](https://www.jusbrasil.com.br/diarios/DJSP/)
+**Exemplos de números de processos** podem ser encontrados nos diários oficiais:
+
+* Diário Oficial de Alagoas: [jusbrasil.com.br/diarios/DJAL/](https://www.jusbrasil.com.br/diarios/DJAL/)
+* Diário de Justiça do Ceará: [jusbrasil.com.br/diarios/DJCE/](https://www.jusbrasil.com.br/diarios/DJCE/)
+* Diário de Justiça de São Paulo: [jusbrasil.com.br/diarios/DJSP/](https://www.jusbrasil.com.br/diarios/DJSP/)
+
+---
 
 # Acesso à aplicação
 
@@ -49,12 +52,12 @@ gcloud run services describe jus-crawler --region southamerica-east1 --format='v
 
 Com a URL retornada, os acessos principais são:
 
-* Aplicação: `https://<URL_DO_SERVICO>`
-* Documentação Swagger: `https://<URL_DO_SERVICO>/docs`
+* **Aplicação:** `https://<URL_DO_SERVICO>`
+* **Documentação Swagger:** `https://<URL_DO_SERVICO>/docs`
 
-## Como efetuar o deploy (Google Cloud Run)
+## Como efetuar o deploy no Google Cloud Run
 
-Pré-requisitos:
+### Pré-requisitos
 
 * Projeto criado no Google Cloud
 * APIs habilitadas:
@@ -63,7 +66,7 @@ Pré-requisitos:
     * Cloud Build API
 * Código-fonte disponível no diretório do projeto
 
-Passo a passo:
+### Passo a passo
 
 ```bash
 gcloud auth login
@@ -72,10 +75,13 @@ gcloud services enable run.googleapis.com artifactregistry.googleapis.com cloudb
 gcloud run deploy jus-crawler --source . --region southamerica-east1 --allow-unauthenticated --port 8080 --timeout 300 --memory 512Mi --min-instances 0 --max-instances 1
 ```
 
-Observações:
+### Observações
 
 * Não é necessário criar credenciais manualmente para esse fluxo inicial de deploy.
 * Se o `gcloud` não estiver instalado localmente, use o **Cloud Shell** no console do Google Cloud.
+
+---
+
 # Organização do código
 
 | №   | Path                                | Descrição                                                                                                            |
@@ -89,15 +95,17 @@ Observações:
 | 7.  | source/services/parse.py            | Métodos de parsing dos dados HTML dos tribunais                                                                      |
 | 8.  | source/services/tribunais_mapper.py | Mapeamento de tribunais suportados (nome, sigla, domínio)                                                           |
 | 9.  | source/services/validate.py         | Schemas de validação de input com [Cerberus](https://docs.python-cerberus.org)                                      |
-| 10. | source/services/subscriptions.py     | Gerenciamento de inscrições em SQLite (com migração de JSON legado)                                                  |
-| 11. | source/services/notifications.py     | Envio de emails (confirmação e atualização); suporta SMTP ou demo logging em /tmp/juscrawler_notifications.log      |
-| 12. | source/services/scheduler.py         | Agendador em background para verificação automática de movimentações e notificação                                   |
+| 10. | source/services/subscriptions.py    | Gerenciamento de inscrições em SQLite (com migração de JSON legado)                                                  |
+| 11. | source/services/notifications.py    | Envio de emails (confirmação e atualização); suporta SMTP ou demo logging em /tmp/juscrawler_notifications.log      |
+| 12. | source/services/scheduler.py        | Agendador em background para verificação automática de movimentações e notificação                                   |
 | 13. | front-end/                          | Diretório com arquivos estáticos e templates HTML                                                                    |
 | 14. | front-end/templates/                | Templates Jinja2 (home.html, processo.html, sobre.html, unsubscribe.html)                                          |
 | 15. | front-end/static/                   | Arquivos CSS (style.css, style-process.css, style-about.css)                                                        |
 | 16. | tests/                              | Testes automatizados com pytest para parsing, validação e orquestração                                               |
 | 17. | requirements.txt                    | Dependências do projeto                                                                                              |
 | 18. | README.md                           | Documentação do projeto (este arquivo)                                                                               |
+
+---
 
 # Funcionalidades de Notificação e Acompanhamento
 
@@ -121,7 +129,7 @@ O sistema suporta duas modalidades de notificação:
 2. **Produção (SMTP):** Emails enviados via configuração SMTP
 
 Configuração via variáveis de ambiente (`.env`):
-```
+```env
 SMTP_SERVER=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=seu_email@gmail.com
@@ -139,20 +147,30 @@ Um agendador em background verifica automaticamente novos eventos em processos c
 
 ## Endpoints Administrativos
 
-### `POST /admin/scheduler` — Configurar intervalo
+### `POST /admin/scheduler` — Configurar intervalo de verificação
 
-Ajusta o intervalo de verificação automática em tempo de execução.
+Ajusta o intervalo de verificação automática do agendador em tempo de execução.
 
+**Payload:**
 ```json
 {
   "interval_seconds": 3600
 }
 ```
 
+**Resposta:**
+```json
+{
+  "ok": true,
+  "interval_seconds": 3600
+}
+```
+
 ### `POST /admin/check` — Enviar email de demonstração
 
-Envia um email de notificação para um endereço informado com a última movimentação armazenada de um CNJ (sem consultar o tribunal).
+Envia um email de notificação para um endereço informado com a última movimentação armazenada de um CNJ (sem fazer consulta ao tribunal).
 
+**Payload:**
 ```json
 {
   "cnj": "0000000-00.0000.0.00.0000",
@@ -186,11 +204,14 @@ aiohttp.client_exceptions.ClientConnectorSSLError: Cannot connect to host esaj.t
 
 Portanto, atualmente é possível utilizar o processamento assíncrono apenas para buscar informações de processos do TJAL.
 
+---
+
 # Como Executar Localmente
 
-### Usando [pyenv](https://github.com/pyenv/pyenv-installer)
+## Usando pyenv
 
-**Ambiente local:**
+### Configuração do ambiente local
+
 ```bash
 pyenv install 3.11.3
 pyenv virtualenv 3.11.3 env-jus_crawler
@@ -207,7 +228,7 @@ pip install -r requirements.txt
 Crie um arquivo `.env` na raiz do projeto com as variáveis necessárias:
 
 ```bash
-# Scheduler (em segundos; padrão 12 horas)
+# Scheduler (em segundos; padrão 12 horas = 43200)
 CHECK_INTERVAL_SECONDS=43200
 
 # Email (demo mode se não configurado)
@@ -233,7 +254,9 @@ A aplicação estará disponível em http://127.0.0.1:8000
 
 A documentação Swagger estará disponível em http://127.0.0.1:8000/docs
 
- Automatizados
+---
+
+# Testes Automatizados
 
 O projeto inclui testes automatizados com `pytest`, cobrindo:
 - Parsing e extração de dados
@@ -241,13 +264,13 @@ O projeto inclui testes automatizados com `pytest`, cobrindo:
 - Orquestração e consolidação de resultados
 - **Renderização de templates com múltiplos cenários**
 
-Para rodar todos os testes localmente:
+## Rodar todos os testes
 
 ```bash
 pytest -q
 ```
 
-### Testes específicos do front-end
+## Testes específicos do front-end
 
 20 testes automatizados validam a renderização de templates com dados de processos simulados:
 
@@ -272,14 +295,18 @@ pytest tests/test_frontend_templates.py --cov=source.main
 
 Todos os testes usam fixtures HTML locais em `tests/` e não dependem de requisições ao vivo para os portais dos tribunais.
 
-## Banco de dados SQLite
+---
+
+# Banco de Dados SQLite
 
 O projeto armazena inscrições em um banco de dados SQLite local em `data/subscriptions.db`:
 
 - **Migração automática:** Se você tiver um arquivo JSON legado em `data/subscriptions.json`, será migrado automaticamente ao iniciar a aplicação.
 - **Fallback:** Se o SQLite não estiver disponível, o projeto usa armazenamento em JSON (legado).
 
-**Em Linux (Ubuntu/Debian):** Instale as dependências de desenvolvimento do SQLite antes de compilar Python:
+## Configuração do SQLite em Linux (Ubuntu/Debian)
+
+Instale as dependências de desenvolvimento do SQLite antes de compilar Python:
 
 ```bash
 sudo apt update
@@ -304,6 +331,6 @@ Verifique o suporte a SQLite em Python:
 python -c "import sqlite3; print('sqlite version:', sqlite3.sqlite_version)"
 ```
 
-**Docker:** O Dockerfile foi ajustado para instalar os pacotes do sistema necessários para compilar e executar com suporte a SQLite. Se você compilar a imagem localmente, terá suporte de runtime SQLite adequado.
+## Dockerfile e Docker
 
----
+O Dockerfile foi ajustado para instalar os pacotes do sistema necessários para compilar e executar com suporte a SQLite. Se você compilar a imagem localmente, terá suporte de runtime SQLite adequado.
