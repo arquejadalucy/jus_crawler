@@ -168,3 +168,37 @@ def deactivate_subscription(subscription_id: str):
         )
         conn.commit()
         return cursor.rowcount > 0
+
+
+def deactivate_by_cnj_email(cnj: str, contato: str):
+    """Deactivate subscription(s) matching CNJ and contact (email). Returns number of updated rows."""
+    _init_db_once()
+    now = datetime.utcnow().isoformat()
+    with _connect() as conn:
+        cursor = conn.execute(
+            """
+            UPDATE subscriptions
+            SET ativo = 0, atualizado_em = ?
+            WHERE cnj = ? AND contato = ?
+            """,
+            (now, cnj, contato),
+        )
+        conn.commit()
+        return cursor.rowcount
+
+
+def update_last_movement(subscription_id: str, mov_data: str, mov_desc: str):
+    """Update the last known movement for a subscription."""
+    _init_db_once()
+    now = datetime.utcnow().isoformat()
+    with _connect() as conn:
+        cursor = conn.execute(
+            """
+            UPDATE subscriptions
+            SET ultimo_mov_data = ?, ultimo_mov_descricao = ?, atualizado_em = ?
+            WHERE id = ?
+            """,
+            (mov_data, mov_desc, now, subscription_id),
+        )
+        conn.commit()
+        return cursor.rowcount > 0

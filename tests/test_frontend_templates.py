@@ -46,6 +46,33 @@ class TestAboutPageRoute:
 
 class TestProcessoPageWithValidData:
     """Testes da página de processo com dados válidos (1º grau)."""
+
+    @patch('source.main.get_processo_info_by_id')
+    def test_processo_page_trims_input_spaces_before_lookup(self, mock_get_info):
+        mock_get_info.return_value = {
+            "id": "1234567-89.1234.5.67.8900",
+            "tribunal": "TJSP",
+            "Resultado": {
+                "Primeira Instância": {
+                    "classe": "Ação Cível",
+                    "area": "Cível",
+                    "assunto": "Indenização",
+                    "data": "2024-01-10",
+                    "juiz": "Juiz Silva",
+                    "valor": "R$ 5.000,00",
+                    "partes": [],
+                    "movimentações": []
+                }
+            }
+        }
+
+        response = client.post(
+            "/buscaprocesso",
+            data={"id_processo": " 1234567-89.1234.5.67.8900 "}
+        )
+
+        assert response.status_code == 200
+        mock_get_info.assert_called_once_with("1234567-89.1234.5.67.8900")
     
     @patch('source.main.get_processo_info_by_id')
     def test_processo_page_renders_valid_first_grau_data(self, mock_get_info):
@@ -196,6 +223,7 @@ class TestNormalizeProcessResult:
         """Testa normalização com resultado válido."""
         result = {
             "id": "1234567-89.1234.5.67.8900",
+            "tribunal": "TJSP",
             "Resultado": {"classe": "Ação"}
         }
         
@@ -204,6 +232,7 @@ class TestNormalizeProcessResult:
         # Nova estrutura desaninhada: flatten do Resultado
         assert normalized["id"] == "1234567-89.1234.5.67.8900"
         assert normalized["classe"] == "Ação"
+        assert normalized["tribunal"] == "TJSP"
         assert "Resultado" not in normalized
         
     def test_normalize_non_dict_result(self):
@@ -235,6 +264,28 @@ class TestNormalizeProcessResult:
         normalized = normalize_process_result_for_template(test_id, None)
         
         assert normalized["id"] == test_id
+
+    def test_normalize_preserves_metadata_without_flattening(self):
+        """Testa que metadados top-level são mantidos no payload."""
+        result = {
+            "id": "1234567-89.1234.5.67.8900",
+            "tribunal": "TJSP",
+            "Primeira Instância": {
+                "classe": "Ação",
+                "area": "Cível",
+                "assunto": "Teste",
+                "data": "2024-01-10",
+                "juiz": "Juiz",
+                "valor": "R$ 1.000,00",
+                "partes": [],
+                "movimentações": []
+            }
+        }
+
+        normalized = normalize_process_result_for_template("1234567-89.1234.5.67.8900", result)
+
+        assert normalized["tribunal"] == "TJSP"
+        assert "Primeira Instância" in normalized
 
 
 class TestProcessoPageStructure:

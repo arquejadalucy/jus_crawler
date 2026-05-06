@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancelar Inscrição - JUS CRAWLER</title>
+    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <div class="mt-5">
+            <h1>Cancelar Inscrição</h1>
+            {% if success %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% else %}
+                <div class="alert alert-warning">{{ message }}</div>
+            {% endif %}
+            <a href="/" class="btn btn-primary">Voltar para Home</a>
+        </div>
+    </main>
+</body>
+</html>

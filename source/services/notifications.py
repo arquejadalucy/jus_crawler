@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from dotenv import load_dotenv
+from urllib.parse import quote_plus
 
 
 def _smtp_config():
@@ -26,7 +27,10 @@ def send_subscription_confirmation(contato: str, cnj: str, tipo: str):
     Returns True if sent or logged successfully, False otherwise.
     """
     assunto = "🔔 Inscrição confirmada - JUS CRAWLER"
-    
+
+    base = os.getenv("APP_BASE_URL", "http://localhost:8000")
+    unsubscribe_url = f"{base}/unsubscribe?cnj={quote_plus(cnj)}&email={quote_plus(contato)}"
+
     corpo = f"""
 Olá!
 
@@ -44,6 +48,7 @@ Obrigado por usar JUS CRAWLER!
 ---
 Este é um email automático. Não responda diretamente.
 """
+    corpo += f"\nCancelar inscrição: {unsubscribe_url}\n"
 
     cfg = _smtp_config()
     if not cfg["user"] or not cfg["password"]:
@@ -54,28 +59,28 @@ Este é um email automático. Não responda diretamente.
                 f.write(f"\n[{datetime.now().isoformat()}] DEMO EMAIL\n")
                 f.write(f"  To: {contato}\n")
                 f.write(f"  Subject: {assunto}\n")
-                f.write(f"  Body Preview: {corpo[:100]}...\n")
+                f.write(f"  Body Preview: {corpo[:200]}...\n")
             print(f"✓ Notificação registrada em {log_path}")
             return True
         except Exception as e:
             print(f"✗ Erro ao registrar notificação: {e}")
             return False
-    
+
     # Production mode: send via SMTP
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = assunto
         msg["From"] = cfg["sender"]
         msg["To"] = contato
-        
+
         part = MIMEText(corpo, "plain", "utf-8")
         msg.attach(part)
-        
+
         with smtplib.SMTP(cfg["server"], cfg["port"], timeout=10) as server:
             server.starttls()
             server.login(cfg["user"], cfg["password"])
             server.sendmail(cfg["sender"], contato, msg.as_string())
-        
+
         print(f"✓ Email enviado para {contato}")
         return True
     except Exception as e:
@@ -107,6 +112,9 @@ Acesse {cnj} para ver mais detalhes.
 JUS CRAWLER - Notificações Automáticas
 Este é um email automático. Não responda diretamente.
 """
+    base = os.getenv("APP_BASE_URL", "http://localhost:8000")
+    unsubscribe_url = f"{base}/unsubscribe?cnj={quote_plus(cnj)}&email={quote_plus(contato)}"
+    corpo += f"\nCancelar inscrição: {unsubscribe_url}\n"
 
     cfg = _smtp_config()
     if not cfg["user"] or not cfg["password"]:
@@ -114,7 +122,6 @@ Este é um email automático. Não responda diretamente.
         log_path = "/tmp/juscrawler_notifications.log"
         try:
             with open(log_path, "a", encoding="utf-8") as f:
-                f.write(f"\n[{datetime.now().isoformat()}] DEMO UPDATE EMAIL\n")
                 f.write(f"  To: {contato}\n")
                 f.write(f"  Subject: {assunto}\n")
                 f.write(f"  Process: {cnj}\n")

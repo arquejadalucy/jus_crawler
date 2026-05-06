@@ -1,5 +1,6 @@
 from cerberus import Validator
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+import logging
 from source.services.collect import search_process_data
 from source.models.NumeroProcessoInfo import NumeroProcessoInfo
 from source.models.ProcessoRequestBody import ProcessRequestBody
@@ -15,12 +16,39 @@ router = APIRouter(
 validator = Validator(error_handler=ProcessNumberRegexErrorHandler)
 
 
+def normalize_numero_processo(numero_processo: str):
+    if isinstance(numero_processo, str):
+        return numero_processo.strip()
+    return numero_processo
+
+
 def valid_request(processo_info: NumeroProcessoInfo):
     return validator.validate(processo_info.__dict__, process_request_informations_schema)
 
 
 def valid_process_id(numero_processo: str):
+    numero_processo = normalize_numero_processo(numero_processo)
     return validator.validate({"numero_processo": numero_processo}, id_processo_schema)
+
+
+def fetch_processo_info(id_processo: str):
+    """Core lookup used by both endpoint and background tasks.
+
+    Raises ValueError on validation errors with the `validator.errors` payload.
+    Returns the result of `search_process_data` on success.
+    """
+    id_processo = normalize_numero_processo(id_processo)
+    if not valid_process_id(id_processo):
+        raise ValueError(validator.errors)
+
+    processo_info = NumeroProcessoInfo(id_processo)
+
+    if not valid_request(processo_info):
+        raise ValueError(validator.errors)
+
+    payload = search_process_data(processo_info)
+
+    return payload
 
 
 @router.post("/busca")
@@ -47,16 +75,10 @@ def buscar_processo(process_request: ProcessRequestBody):
     :param process_request: User input
     :return:
     """
-    if not valid_process_id(process_request.numero_processo):
-        return validator.errors
-
-    processo_info = NumeroProcessoInfo(process_request.numero_processo)
-
-    if not valid_request(processo_info):
-        return validator.errors
-
-    response = search_process_data(processo_info)
-    return response
+    try:
+        return fetch_processo_info(process_request.numero_processo)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=exc.args[0])
 
 
 @router.get("/{id_processo}")
@@ -83,14 +105,8 @@ def get_processo_info_by_id(id_processo: str):
     :param process_request: User input
     :return:
     """
-    if not valid_process_id(id_processo):
-        print("Invalid id")
-        return validator.errors
-
-    processo_info = NumeroProcessoInfo(id_processo)
-    print(processo_info)
-
-    if not valid_request(processo_info):
-        print("Invalid request")
-        return validator.errors
-    return search_process_data(processo_info)
+    try:
+        logging.getLogger(__name__).debug("Fetching processo info for id %s", id_processo)
+        return fetch_processo_info(id_processo)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=exc.args[0])

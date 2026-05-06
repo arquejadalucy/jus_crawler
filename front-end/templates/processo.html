@@ -29,6 +29,11 @@
     <main class="container process-container">
         <div class="process-header">
             <h1>Informações do Processo <span class="process-id">{{ result.id }}</span></h1>
+            {% if result.tribunal %}
+                <div class="mt-2">
+                    <span class="badge badge-primary">Tribunal: {{ result.tribunal }}</span>
+                </div>
+            {% endif %}
             <div class="process-actions">
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#subscribeForm" aria-expanded="false" aria-controls="subscribeForm">
                     Acompanhar
@@ -43,6 +48,18 @@
                 {% else %}
                     <div class="alert alert-warning" role="alert">{{ subscribe_message }}</div>
                 {% endif %}
+            </div>
+        {% endif %}
+
+        {% if result.ERROR %}
+            <div class="alert alert-danger mt-4" role="alert" style="border-left: 4px solid #dc3545; border-radius: 0.25rem;">
+                <div style="display: flex; align-items: flex-start;">
+                    <div style="font-size: 1.5rem; margin-right: 15px;">⚠️</div>
+                    <div>
+                        <strong style="font-size: 1.1rem;">Erro ao consultar o processo</strong>
+                        <p style="margin: 8px 0 0 0; font-size: 0.95rem; line-height: 1.5;">{{ result.ERROR }}</p>
+                    </div>
+                </div>
             </div>
         {% endif %}
 
@@ -78,18 +95,13 @@
         </section>
         
         {% for key, value in result.items() %}
-            {% if key != "id" %}
+            {% if key != "id" and key != "tribunal" %}
             <div class="degree-section">
                 <h2 class="grau-title">{{ key }}</h2>
                 
                 {% if result[key] is mapping and 'ERROR' in result[key] %}
-                    <div class="alert alert-danger" role="alert">
-                        {% if result[key] is mapping %}
-                            {{ result[key].get('ERROR') }}
-                        {% else %}
-                            {{ result[key] }}
-                        {% endif %}
-                    </div>
+                    <div class="alert alert-danger" role="alert" style="border-left: 4px solid #dc3545;">
+                        <strong>Erro neste grau:</strong> {{ result[key].get('ERROR') }}
                 {% elif result[key] is not mapping %}
                     <div class="alert alert-warning" role="alert">
                         {{ result[key] }}

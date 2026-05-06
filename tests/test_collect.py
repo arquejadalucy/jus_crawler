@@ -32,6 +32,7 @@ def test_search_process_data_filters_invalid_sections_and_keeps_errors(monkeypat
 
     assert resultado == {
         "id": "1234567-12.2024.1.06.1234",
+        "tribunal": "TJCE",
         "Segundo Grau": {"ERROR": "consulta indisponível"},
     }
 

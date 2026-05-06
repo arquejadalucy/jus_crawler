@@ -136,7 +136,10 @@ def search_process_data(process: NumeroProcessoInfo):
     logger.debug("Dados brutos coletados", extra={"processo_id": process.numero_processo, "data": data})
     
     # Filtrar apenas graus com dados válidos
-    filtered_data = {"id": data.get("id")}
+    filtered_data = {
+        "id": data.get("id"),
+        "tribunal": nome_tribunal
+    }
     for grau, grau_data in data.items():
         if grau != "id":
             # Verificar se há dados válidos (não é erro e possui campo classe)
